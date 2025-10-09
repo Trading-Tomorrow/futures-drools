@@ -1,8 +1,8 @@
 package rules
 dialect "java"
 
-import org.example.model.ExchangeRate;
-import org.example.model.MarketSignal;
+import org.futures.model.ExchangeRate;
+import org.futures.model.MarketSignal;
 
 // 💵 Bearish when local currency weakens (USD/BRL rises)
 rule "Bearish - BRL depreciation"

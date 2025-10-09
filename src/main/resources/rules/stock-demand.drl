@@ -1,7 +1,7 @@
 package rules
 
-import org.example.model.StockDemand;
-import org.example.model.MarketSignal;
+import org.futures.model.StockDemand;
+import org.futures.model.MarketSignal;
 
 // ☕ Bullish when stocks are low and demand or exports rise
 rule "Bullish - Low stock, high demand"

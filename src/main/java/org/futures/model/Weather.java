@@ -1,4 +1,4 @@
-package org.example.model;
+package org.futures.model;
 
 public class Weather {
     private String region;

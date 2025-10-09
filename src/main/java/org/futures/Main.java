@@ -1,6 +1,6 @@
-package org.example;
+package org.futures;
 
-import org.example.model.*;
+import org.futures.model.*;
 import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;

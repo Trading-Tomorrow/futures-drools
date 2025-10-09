@@ -1,4 +1,4 @@
-package org.example.model;
+package org.futures.model;
 
 public class StockDemand {
     private String region;         // e.g., "Brazil", "Global"

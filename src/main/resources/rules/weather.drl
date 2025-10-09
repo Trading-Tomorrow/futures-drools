@@ -1,6 +1,6 @@
 package rules
 
-import org.example.model.Weather;
+import org.futures.model.Weather;
 
 declare MarketSignal
     type : String

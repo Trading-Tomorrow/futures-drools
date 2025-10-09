@@ -1,6 +1,6 @@
 package rules
 
-import org.example.model.Sentiment;
+import org.futures.model.Sentiment;
 
 declare MarketSignal
     type : String

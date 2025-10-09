@@ -1,4 +1,4 @@
-package org.example.model;
+package org.futures.model;
 
 public class WhaleActivity {
     private String period;           // e.g., "2025-07"

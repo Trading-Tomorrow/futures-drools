@@ -1,4 +1,4 @@
-package org.example.model;
+package org.futures.model;
 
 public class Sentiment {
     private String source; // e.g., "news", "twitter", "report"

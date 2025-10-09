@@ -1,6 +1,6 @@
 package rules
 
-import org.example.model.WhaleActivity;
+import org.futures.model.WhaleActivity;
 
 declare MarketSignal
     type : String
