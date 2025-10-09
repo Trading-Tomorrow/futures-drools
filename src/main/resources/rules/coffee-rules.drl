@@ -1,0 +1,8 @@
+package rules
+
+rule "Coffee price alert"
+when
+    $coffee : String(this == "Arabica")
+then
+    System.out.println("☕ Arabica detected — watch futures closely!");
+end

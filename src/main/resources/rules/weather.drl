@@ -1,0 +1,40 @@
+package rules
+
+import org.example.model.Weather;
+
+declare MarketSignal
+    type : String
+    confidence : double
+end
+
+rule "Bullish - Drought conditions"
+when
+    $w : Weather(condition == "drought" || temperatureDeviation > 2)
+then
+    insertLogical(new MarketSignal("bullish", 0.8));
+    System.out.println("☀️ Drought detected → bullish signal (risk of bad harvest)");
+end
+
+rule "Bullish - Frost conditions"
+when
+    $w : Weather(condition == "frost" || temperatureDeviation < -2)
+then
+    insertLogical(new MarketSignal("bullish", 0.9));
+    System.out.println("❄️ Frost detected → bullish signal (production loss expected)");
+end
+
+rule "Bearish - Excess rain"
+when
+    $w : Weather(condition == "rain" && precipitationDeviation > 30)
+then
+    insertLogical(new MarketSignal("bearish", 0.7));
+    System.out.println("🌧️ Excess rain → bearish signal (strong harvest expected)");
+end
+
+rule "Neutral - Ideal conditions"
+when
+    $w : Weather(condition == "ideal")
+then
+    insertLogical(new MarketSignal("neutral", 0.5));
+    System.out.println("🌤️ Ideal conditions → neutral market impact");
+end

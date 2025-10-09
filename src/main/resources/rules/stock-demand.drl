@@ -1,0 +1,42 @@
+package rules
+
+import org.example.model.StockDemand;
+import org.example.model.MarketSignal;
+
+// ☕ Bullish when stocks are low and demand or exports rise
+rule "Bullish - Low stock, high demand"
+when
+    $s : StockDemand(
+        stockLevel < (avgStockLevel * 0.8),
+        demandChange > 2.0 || exportChange > 2.0
+    )
+then
+    insertLogical(new MarketSignal("bullish", 0.85));
+    System.out.println("☕ Low stock & high demand → bullish signal (" + $s.getRegion() + ")");
+end
+
+// 📦 Bearish when stocks are high and demand drops
+rule "Bearish - High stock, weak demand"
+when
+    $s : StockDemand(
+        stockLevel > (avgStockLevel * 1.2),
+        demandChange < -2.0
+    )
+then
+    insertLogical(new MarketSignal("bearish", 0.85));
+    System.out.println("📦 High stock & weak demand → bearish signal (" + $s.getRegion() + ")");
+end
+
+// ⚖️ Neutral when stock levels and demand are within normal range
+rule "Neutral - Balanced stock and demand"
+when
+    $s : StockDemand(
+        stockLevel >= (avgStockLevel * 0.8),
+        stockLevel <= (avgStockLevel * 1.2),
+        demandChange >= -2.0,
+        demandChange <= 2.0
+    )
+then
+    insertLogical(new MarketSignal("neutral", 0.5));
+    System.out.println("⚖️ Balanced stock & demand → neutral signal (" + $s.getRegion() + ")");
+end

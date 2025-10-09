@@ -1,0 +1,46 @@
+package rules
+
+import org.example.model.WhaleActivity;
+
+declare MarketSignal
+    type : String
+    confidence : double
+end
+
+// 🟢 Whale accumulation (bullish signal)
+rule "Bullish - Whale accumulation detected"
+when
+    $w : WhaleActivity(
+        volume > (volume7dAvg * 2),
+        openInterestChange > 5,
+        avgTradeSize > 200
+    )
+then
+    insertLogical(new MarketSignal("bullish", 0.9));
+    System.out.println("🐋 Whale accumulation → bullish signal (period: " + $w.getPeriod() + ")");
+end
+
+// 🔴 Whale distribution (bearish signal)
+rule "Bearish - Whale distribution detected"
+when
+    $w : WhaleActivity(
+        volume > (volume7dAvg * 2),
+        openInterestChange < -5,
+        avgTradeSize > 200
+    )
+then
+    insertLogical(new MarketSignal("bearish", 0.9));
+    System.out.println("🐋 Whale distribution → bearish signal (period: " + $w.getPeriod() + ")");
+end
+
+// ⚪ Neutral / no clear whale signal
+rule "Neutral - Normal volume and OI"
+when
+    $w : WhaleActivity(
+        volume <= (volume7dAvg * 2),
+        openInterestChange >= -5 && openInterestChange <= 5
+    )
+then
+    insertLogical(new MarketSignal("neutral", 0.5));
+    System.out.println("⚪ No whale anomaly detected → neutral signal (period: " + $w.getPeriod() + ")");
+end

@@ -1,0 +1,32 @@
+package rules
+dialect "java"
+
+import org.example.model.ExchangeRate;
+import org.example.model.MarketSignal;
+
+// 💵 Bearish when local currency weakens (USD/BRL rises)
+rule "Bearish - BRL depreciation"
+when
+    $e : ExchangeRate(pair == "USDBRL", changePercent > 1.5)
+then
+    insertLogical(new MarketSignal("bearish", 0.8));
+    System.out.println("BRL weakening detected → bearish for coffee prices (" + $e.getChangePercent() + "%)");
+end
+
+// 📈 Bullish when BRL strengthens (USD/BRL falls)
+rule "Bullish - BRL appreciation"
+when
+    $e : ExchangeRate(pair == "USDBRL", changePercent < -1.5)
+then
+    insertLogical(new MarketSignal("bullish", 0.8));
+    System.out.println("BRL strengthening detected → bullish for coffee prices (" + $e.getChangePercent() + "%)");
+end
+
+// ⚠️ Volatile FX → uncertain / neutral stance
+rule "Neutral - High FX volatility"
+when
+    $e : ExchangeRate(volatility > 3.0)
+then
+    insertLogical(new MarketSignal("neutral", 0.5));
+    System.out.println("High FX volatility → neutral stance (rate: " + $e.getCurrentRate() + ")");
+end

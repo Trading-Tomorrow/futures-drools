@@ -1,0 +1,44 @@
+package rules
+
+import org.example.model.Sentiment;
+
+declare MarketSignal
+    type : String
+    confidence : double
+end
+
+// 🟢 Strongly positive sentiment (bullish)
+rule "Bullish - Positive sentiment strong"
+when
+    $s : Sentiment(tone == "positive", intensity > 0.6)
+then
+    insertLogical(new MarketSignal("bullish", 0.7));
+    System.out.println("🟢 Positive sentiment detected → bullish signal (" + $s.getSource() + ")");
+end
+
+// 🟠 Mixed or neutral tone
+rule "Neutral - Mixed sentiment"
+when
+    $s : Sentiment(tone == "neutral" || (intensity >= 0.4 && intensity <= 0.6))
+then
+    insertLogical(new MarketSignal("neutral", 0.5));
+    System.out.println("🟠 Neutral sentiment detected → market balanced (" + $s.getSource() + ")");
+end
+
+// 🔴 Negative tone = bearish expectation
+rule "Bearish - Negative sentiment strong"
+when
+    $s : Sentiment(tone == "negative", intensity > 0.6)
+then
+    insertLogical(new MarketSignal("bearish", 0.8));
+    System.out.println("🔴 Negative sentiment detected → bearish signal (" + $s.getSource() + ")");
+end
+
+// 📈 Very strong optimism (overconfidence)
+rule "Contrarian - Excessive optimism"
+when
+    $s : Sentiment(tone == "positive", intensity > 0.9)
+then
+    insertLogical(new MarketSignal("bearish", 0.6));
+    System.out.println("📈 Excessive optimism detected → contrarian bearish risk (" + $s.getSource() + ")");
+end
