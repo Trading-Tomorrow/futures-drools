@@ -1,0 +1,266 @@
+[
+  {
+    "month": "2023-08",
+    "weather": { "region": "Brazil", "condition": "drought", "rainAnomaly": -20, "tempAnomaly": 2.5, "impact": 7 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.6 },
+      { "source": "Twitter", "tone": "negative", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2023-08", "volume": 9700, "avgTradeSize": 210, "oiChange": 5.1, "avgVolume7d": 4600, "avgOIChange7d": 2.0 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.82, "volatility": 1.2, "changePct": 0.6 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 920000, "avgStockLevel": 980000, "demandChange": 2.0, "exportChange": 1.5 }
+  },
+  {
+    "month": "2023-09",
+    "weather": { "region": "Brazil", "condition": "normal", "rainAnomaly": -5, "tempAnomaly": 0.7, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "neutral", "score": 0.55 },
+      { "source": "Twitter", "tone": "positive", "score": 0.65 }
+    ],
+    "whaleActivity": { "period": "2023-09", "volume": 10200, "avgTradeSize": 220, "oiChange": 3.5, "avgVolume7d": 4700, "avgOIChange7d": 2.1 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.87, "volatility": 1.3, "changePct": 1.0 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 940000, "avgStockLevel": 970000, "demandChange": 1.5, "exportChange": 2.0 }
+  },
+  {
+    "month": "2023-10",
+    "weather": { "region": "Brazil", "condition": "rain", "rainAnomaly": 15, "tempAnomaly": -0.5, "impact": 3 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.7 },
+      { "source": "Twitter", "tone": "positive", "score": 0.68 }
+    ],
+    "whaleActivity": { "period": "2023-10", "volume": 11100, "avgTradeSize": 225, "oiChange": 4.0, "avgVolume7d": 4900, "avgOIChange7d": 2.3 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.79, "volatility": 1.4, "changePct": -0.8 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 910000, "avgStockLevel": 950000, "demandChange": 2.0, "exportChange": 2.3 }
+  },
+  {
+    "month": "2023-11",
+    "weather": { "region": "Brazil", "condition": "frost", "rainAnomaly": -10, "tempAnomaly": -3.0, "impact": 8 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.85 },
+      { "source": "Twitter", "tone": "negative", "score": 0.8 }
+    ],
+    "whaleActivity": { "period": "2023-11", "volume": 13800, "avgTradeSize": 260, "oiChange": 7.8, "avgVolume7d": 5200, "avgOIChange7d": 3.0 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.02, "volatility": 2.1, "changePct": 2.2 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 800000, "avgStockLevel": 940000, "demandChange": 4.0, "exportChange": 3.0 }
+  },
+  {
+    "month": "2023-12",
+    "weather": { "region": "Brazil", "condition": "normal", "rainAnomaly": 2, "tempAnomaly": 0.4, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.72 },
+      { "source": "Twitter", "tone": "neutral", "score": 0.6 }
+    ],
+    "whaleActivity": { "period": "2023-12", "volume": 11200, "avgTradeSize": 230, "oiChange": 4.2, "avgVolume7d": 5100, "avgOIChange7d": 2.1 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.95, "volatility": 1.5, "changePct": -0.7 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 870000, "avgStockLevel": 930000, "demandChange": 2.5, "exportChange": 2.1 }
+  },
+  {
+    "month": "2024-01",
+    "weather": { "region": "Brazil", "condition": "heatwave", "rainAnomaly": -25, "tempAnomaly": 3.6, "impact": 8 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.8 },
+      { "source": "Twitter", "tone": "negative", "score": 0.75 }
+    ],
+    "whaleActivity": { "period": "2024-01", "volume": 15000, "avgTradeSize": 255, "oiChange": 9.0, "avgVolume7d": 5400, "avgOIChange7d": 2.9 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.18, "volatility": 1.8, "changePct": 2.7 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 770000, "avgStockLevel": 920000, "demandChange": 4.3, "exportChange": 3.1 }
+  },
+  {
+    "month": "2024-02",
+    "weather": { "region": "Brazil", "condition": "drought", "rainAnomaly": -30, "tempAnomaly": 3.0, "impact": 9 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.9 },
+      { "source": "Twitter", "tone": "negative", "score": 0.82 }
+    ],
+    "whaleActivity": { "period": "2024-02", "volume": 16200, "avgTradeSize": 280, "oiChange": 10.5, "avgVolume7d": 5500, "avgOIChange7d": 3.3 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.42, "volatility": 2.4, "changePct": 3.6 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 710000, "avgStockLevel": 910000, "demandChange": 5.1, "exportChange": 3.9 }
+  },
+  {
+    "month": "2024-03",
+    "weather": { "region": "Brazil", "condition": "recovery", "rainAnomaly": 10, "tempAnomaly": -0.9, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.7 },
+      { "source": "Twitter", "tone": "positive", "score": 0.68 }
+    ],
+    "whaleActivity": { "period": "2024-03", "volume": 11800, "avgTradeSize": 235, "oiChange": 5.3, "avgVolume7d": 5200, "avgOIChange7d": 2.3 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.19, "volatility": 1.6, "changePct": -2.4 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 820000, "avgStockLevel": 900000, "demandChange": 2.1, "exportChange": 2.0 }
+  },
+  {
+    "month": "2024-04",
+    "weather": { "region": "Brazil", "condition": "normal", "rainAnomaly": 3, "tempAnomaly": 0.5, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "neutral", "score": 0.5 },
+      { "source": "Twitter", "tone": "positive", "score": 0.6 }
+    ],
+    "whaleActivity": { "period": "2024-04", "volume": 10700, "avgTradeSize": 210, "oiChange": 4.0, "avgVolume7d": 5100, "avgOIChange7d": 2.1 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.10, "volatility": 1.4, "changePct": -1.2 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 850000, "avgStockLevel": 890000, "demandChange": 1.8, "exportChange": 2.4 }
+  },
+  {
+    "month": "2024-05",
+    "weather": { "region": "Brazil", "condition": "light frost", "rainAnomaly": -10, "tempAnomaly": -2.0, "impact": 6 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.7 },
+      { "source": "Twitter", "tone": "neutral", "score": 0.5 }
+    ],
+    "whaleActivity": { "period": "2024-05", "volume": 12500, "avgTradeSize": 240, "oiChange": 6.8, "avgVolume7d": 5200, "avgOIChange7d": 2.7 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.20, "volatility": 1.7, "changePct": 2.1 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 830000, "avgStockLevel": 880000, "demandChange": 2.6, "exportChange": 2.8 }
+  },
+  {
+    "month": "2024-06",
+    "weather": { "region": "Brazil", "condition": "rain", "rainAnomaly": 20, "tempAnomaly": -1.5, "impact": 3 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.75 },
+      { "source": "Twitter", "tone": "positive", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2024-06", "volume": 11300, "avgTradeSize": 225, "oiChange": 4.5, "avgVolume7d": 5100, "avgOIChange7d": 2.2 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.05, "volatility": 1.3, "changePct": -1.5 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 860000, "avgStockLevel": 870000, "demandChange": 1.9, "exportChange": 2.0 }
+  },
+  {
+    "month": "2024-07",
+    "weather": { "region": "Brazil", "condition": "frost", "rainAnomaly": -15, "tempAnomaly": -2.8, "impact": 8 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.9 },
+      { "source": "Twitter", "tone": "negative", "score": 0.85 }
+    ],
+    "whaleActivity": { "period": "2024-07", "volume": 14500, "avgTradeSize": 265, "oiChange": 8.5, "avgVolume7d": 5300, "avgOIChange7d": 2.9 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.30, "volatility": 2.0, "changePct": 2.8 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 780000, "avgStockLevel": 870000, "demandChange": 3.8, "exportChange": 3.0 }
+  },
+  {
+    "month": "2024-08",
+    "weather": { "region": "Brazil", "condition": "drought", "rainAnomaly": -25, "tempAnomaly": 3.2, "impact": 8 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.6 },
+      { "source": "Twitter", "tone": "negative", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2024-08", "volume": 10500, "avgTradeSize": 220, "oiChange": 6.5, "avgVolume7d": 4800, "avgOIChange7d": 2.0 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.89, "volatility": 1.5, "changePct": 0.9 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 910000, "avgStockLevel": 1000000, "demandChange": 2.5, "exportChange": 1.8 }
+  },
+  {
+    "month": "2024-09",
+    "weather": { "region": "Brazil", "condition": "normal", "rainAnomaly": -5, "tempAnomaly": 0.8, "impact": 5 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "neutral", "score": 0.5 },
+      { "source": "Twitter", "tone": "positive", "score": 0.65 }
+    ],
+    "whaleActivity": { "period": "2024-09", "volume": 9900, "avgTradeSize": 210, "oiChange": 3.2, "avgVolume7d": 5000, "avgOIChange7d": 2.2 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.95, "volatility": 1.3, "changePct": 1.1 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 940000, "avgStockLevel": 950000, "demandChange": 1.2, "exportChange": 2.3 }
+  },
+  {
+    "month": "2024-10",
+    "weather": { "region": "Brazil", "condition": "rain", "rainAnomaly": 15, "tempAnomaly": -0.5, "impact": 3 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.8 },
+      { "source": "Twitter", "tone": "positive", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2024-10", "volume": 12500, "avgTradeSize": 240, "oiChange": 5.5, "avgVolume7d": 5200, "avgOIChange7d": 2.5 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.82, "volatility": 1.4, "changePct": -0.9 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 870000, "avgStockLevel": 950000, "demandChange": 3.1, "exportChange": 2.9 }
+  },
+  {
+    "month": "2024-11",
+    "weather": { "region": "Brazil", "condition": "frost", "rainAnomaly": -10, "tempAnomaly": -2.8, "impact": 9 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.9 },
+      { "source": "Twitter", "tone": "negative", "score": 0.85 }
+    ],
+    "whaleActivity": { "period": "2024-11", "volume": 14000, "avgTradeSize": 270, "oiChange": 8.2, "avgVolume7d": 5300, "avgOIChange7d": 3.0 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.02, "volatility": 2.5, "changePct": 2.3 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 780000, "avgStockLevel": 960000, "demandChange": 4.5, "exportChange": 3.2 }
+  },
+  {
+    "month": "2024-12",
+    "weather": { "region": "Brazil", "condition": "normal", "rainAnomaly": 0, "tempAnomaly": 0.5, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.75 },
+      { "source": "Twitter", "tone": "positive", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2024-12", "volume": 11200, "avgTradeSize": 230, "oiChange": 4.1, "avgVolume7d": 5200, "avgOIChange7d": 2.2 },
+    "exchangeRate": { "pair": "USDBRL", "value": 4.93, "volatility": 1.6, "changePct": -0.7 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 850000, "avgStockLevel": 940000, "demandChange": 2.4, "exportChange": 2.1 }
+  },
+  {
+    "month": "2025-01",
+    "weather": { "region": "Brazil", "condition": "heatwave", "rainAnomaly": -20, "tempAnomaly": 3.8, "impact": 8 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.8 },
+      { "source": "Twitter", "tone": "negative", "score": 0.75 }
+    ],
+    "whaleActivity": { "period": "2025-01", "volume": 15500, "avgTradeSize": 260, "oiChange": 9.1, "avgVolume7d": 5300, "avgOIChange7d": 2.8 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.25, "volatility": 2.0, "changePct": 3.0 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 760000, "avgStockLevel": 940000, "demandChange": 4.2, "exportChange": 3.0 }
+  },
+  {
+    "month": "2025-02",
+    "weather": { "region": "Brazil", "condition": "drought", "rainAnomaly": -30, "tempAnomaly": 3.1, "impact": 9 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.9 },
+      { "source": "Twitter", "tone": "negative", "score": 0.85 }
+    ],
+    "whaleActivity": { "period": "2025-02", "volume": 16200, "avgTradeSize": 280, "oiChange": 10.2, "avgVolume7d": 5400, "avgOIChange7d": 3.1 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.45, "volatility": 2.3, "changePct": 3.5 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 720000, "avgStockLevel": 930000, "demandChange": 5.0, "exportChange": 3.8 }
+  },
+  {
+    "month": "2025-03",
+    "weather": { "region": "Brazil", "condition": "recovery", "rainAnomaly": 10, "tempAnomaly": -1.0, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.7 },
+      { "source": "Twitter", "tone": "positive", "score": 0.68 }
+    ],
+    "whaleActivity": { "period": "2025-03", "volume": 11800, "avgTradeSize": 230, "oiChange": 5.5, "avgVolume7d": 5100, "avgOIChange7d": 2.3 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.22, "volatility": 1.7, "changePct": -2.5 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 830000, "avgStockLevel": 920000, "demandChange": 1.8, "exportChange": 2.0 }
+  },
+  {
+    "month": "2025-04",
+    "weather": { "region": "Brazil", "condition": "normal", "rainAnomaly": 0, "tempAnomaly": 0.5, "impact": 4 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "neutral", "score": 0.55 },
+      { "source": "Twitter", "tone": "positive", "score": 0.6 }
+    ],
+    "whaleActivity": { "period": "2025-04", "volume": 10900, "avgTradeSize": 215, "oiChange": 4.1, "avgVolume7d": 5050, "avgOIChange7d": 2.1 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.08, "volatility": 1.5, "changePct": -1.1 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 850000, "avgStockLevel": 910000, "demandChange": 1.5, "exportChange": 2.3 }
+  },
+  {
+    "month": "2025-05",
+    "weather": { "region": "Brazil", "condition": "light frost", "rainAnomaly": -10, "tempAnomaly": -1.8, "impact": 6 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "negative", "score": 0.7 },
+      { "source": "Twitter", "tone": "neutral", "score": 0.55 }
+    ],
+    "whaleActivity": { "period": "2025-05", "volume": 12400, "avgTradeSize": 235, "oiChange": 6.5, "avgVolume7d": 5200, "avgOIChange7d": 2.6 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.18, "volatility": 1.7, "changePct": 2.0 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 820000, "avgStockLevel": 900000, "demandChange": 2.3, "exportChange": 2.8 }
+  },
+  {
+    "month": "2025-06",
+    "weather": { "region": "Brazil", "condition": "rain", "rainAnomaly": 12, "tempAnomaly": -0.5, "impact": 3 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.8 },
+      { "source": "Twitter", "tone": "positive", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2025-06", "volume": 11500, "avgTradeSize": 225, "oiChange": 4.8, "avgVolume7d": 5100, "avgOIChange7d": 2.3 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.00, "volatility": 1.3, "changePct": -1.4 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 860000, "avgStockLevel": 890000, "demandChange": 1.7, "exportChange": 2.2 }
+  },
+  {
+    "month": "2025-07",
+    "weather": { "region": "Brazil", "condition": "drought", "rainAnomaly": -22, "tempAnomaly": 3.5, "impact": 7 },
+    "sentiment": [
+      { "source": "Bloomberg", "tone": "positive", "score": 0.8 },
+      { "source": "Twitter", "tone": "negative", "score": 0.7 }
+    ],
+    "whaleActivity": { "period": "2025-07", "volume": 12000, "avgTradeSize": 250, "oiChange": 8.0, "avgVolume7d": 5000, "avgOIChange7d": 2.0 },
+    "exchangeRate": { "pair": "USDBRL", "value": 5.35, "volatility": 2.1, "changePct": 1.8 },
+    "stockDemand": { "region": "Brazil", "stockLevel": 800000, "avgStockLevel": 1000000, "demandChange": 3.5, "exportChange": 2.8 }
+  }
+]
