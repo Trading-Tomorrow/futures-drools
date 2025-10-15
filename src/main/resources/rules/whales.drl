@@ -1,13 +1,11 @@
 package rules
 
+dialect "java"
+
 import org.futures.model.WhaleActivity;
+import org.futures.model.PartialSignal;
 
-declare MarketSignal
-    type : String
-    confidence : double
-end
-
-// 🟢 Whale accumulation (bullish signal)
+// 🟢 Whale accumulation → bullish
 rule "Bullish - Whale accumulation detected"
 when
     $w : WhaleActivity(
@@ -16,11 +14,13 @@ when
         avgTradeSize > 200
     )
 then
-    insertLogical(new MarketSignal("bullish", 0.9));
-    System.out.println("🐋 Whale accumulation → bullish signal (period: " + $w.getPeriod() + ")");
+    String monthLabel = $w.getPeriod() != null && !$w.getPeriod().isEmpty() ? $w.getPeriod() : "CURRENT";
+    insert(new PartialSignal("whale", "BUY", 0.9, monthLabel));
+    System.out.println("🐋 Whale accumulation → bullish (period=" + $w.getPeriod() +
+        ", OIΔ=" + $w.getOpenInterestChange() + "%, avgTrade=" + $w.getAvgTradeSize() + ")");
 end
 
-// 🔴 Whale distribution (bearish signal)
+// 🔴 Whale distribution → bearish
 rule "Bearish - Whale distribution detected"
 when
     $w : WhaleActivity(
@@ -29,8 +29,10 @@ when
         avgTradeSize > 200
     )
 then
-    insertLogical(new MarketSignal("bearish", 0.9));
-    System.out.println("🐋 Whale distribution → bearish signal (period: " + $w.getPeriod() + ")");
+    String monthLabel = $w.getPeriod() != null && !$w.getPeriod().isEmpty() ? $w.getPeriod() : "CURRENT";
+    insert(new PartialSignal("whale", "SELL", 0.9, monthLabel));
+    System.out.println("🐋 Whale distribution → bearish (period=" + $w.getPeriod() +
+        ", OIΔ=" + $w.getOpenInterestChange() + "%, avgTrade=" + $w.getAvgTradeSize() + ")");
 end
 
 // ⚪ Neutral / no clear whale signal
@@ -41,6 +43,7 @@ when
         openInterestChange >= -5 && openInterestChange <= 5
     )
 then
-    insertLogical(new MarketSignal("neutral", 0.5));
-    System.out.println("⚪ No whale anomaly detected → neutral signal (period: " + $w.getPeriod() + ")");
+    String monthLabel = $w.getPeriod() != null && !$w.getPeriod().isEmpty() ? $w.getPeriod() : "CURRENT";
+    insert(new PartialSignal("whale", "HOLD", 0.5, monthLabel));
+    System.out.println("⚪ No whale anomaly detected → neutral (period=" + $w.getPeriod() + ")");
 end

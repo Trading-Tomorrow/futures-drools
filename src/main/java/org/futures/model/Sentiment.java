@@ -13,8 +13,12 @@ public class Sentiment {
         this.month = month;
     }
 
+
+
     public String getSource() { return source; }
     public String getTone() { return tone; }
     public double getIntensity() { return intensity; }
     public int getMonth() { return month; }
 }
+
+

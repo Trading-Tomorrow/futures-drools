@@ -1,16 +1,18 @@
 package rules
+
 dialect "java"
 
 import org.futures.model.ExchangeRate;
-import org.futures.model.MarketSignal;
+import org.futures.model.PartialSignal;
 
 // 💵 Bearish when local currency weakens (USD/BRL rises)
 rule "Bearish - BRL depreciation"
 when
     $e : ExchangeRate(pair == "USDBRL", changePercent > 1.5)
 then
-    insertLogical(new MarketSignal("bearish", 0.8));
-    System.out.println("BRL weakening detected → bearish for coffee prices (" + $e.getChangePercent() + "%)");
+    insert(new PartialSignal("exchange", "SELL", 0.8, String.valueOf($e.getMonth())));
+    System.out.println("💱 FX → BRL weakening detected → bearish for coffee prices ("
+        + $e.getChangePercent() + "%)");
 end
 
 // 📈 Bullish when BRL strengthens (USD/BRL falls)
@@ -18,8 +20,9 @@ rule "Bullish - BRL appreciation"
 when
     $e : ExchangeRate(pair == "USDBRL", changePercent < -1.5)
 then
-    insertLogical(new MarketSignal("bullish", 0.8));
-    System.out.println("BRL strengthening detected → bullish for coffee prices (" + $e.getChangePercent() + "%)");
+    insert(new PartialSignal("exchange", "BUY", 0.8, String.valueOf($e.getMonth())));
+    System.out.println("💱 FX → BRL strengthening detected → bullish for coffee prices ("
+        + $e.getChangePercent() + "%)");
 end
 
 // ⚠️ Volatile FX → uncertain / neutral stance
@@ -27,6 +30,7 @@ rule "Neutral - High FX volatility"
 when
     $e : ExchangeRate(volatility > 3.0)
 then
-    insertLogical(new MarketSignal("neutral", 0.5));
-    System.out.println("High FX volatility → neutral stance (rate: " + $e.getCurrentRate() + ")");
+    insert(new PartialSignal("exchange", "HOLD", 0.5, String.valueOf($e.getMonth())));
+    System.out.println("💱 FX → High volatility ("
+        + $e.getVolatility() + "%) → neutral stance, rate=" + $e.getCurrentRate());
 end

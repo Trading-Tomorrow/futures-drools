@@ -1,7 +1,9 @@
 package rules
 
+dialect "java"
+
 import org.futures.model.StockDemand;
-import org.futures.model.MarketSignal;
+import org.futures.model.PartialSignal;
 
 // ☕ Bullish when stocks are low and demand or exports rise
 rule "Bullish - Low stock, high demand"
@@ -11,8 +13,10 @@ when
         demandChange > 2.0 || exportChange > 2.0
     )
 then
-    insertLogical(new MarketSignal("bullish", 0.85));
-    System.out.println("☕ Low stock & high demand → bullish signal (" + $s.getRegion() + ")");
+    String monthLabel = $s.getMonth() > 0 ? String.valueOf($s.getMonth()) : "CURRENT";
+    insert(new PartialSignal("stock", "BUY", 0.85, monthLabel));
+    System.out.println("☕ Low stock & high demand → bullish ("
+        + $s.getRegion() + ", month=" + monthLabel + ")");
 end
 
 // 📦 Bearish when stocks are high and demand drops
@@ -23,8 +27,10 @@ when
         demandChange < -2.0
     )
 then
-    insertLogical(new MarketSignal("bearish", 0.85));
-    System.out.println("📦 High stock & weak demand → bearish signal (" + $s.getRegion() + ")");
+    String monthLabel = $s.getMonth() > 0 ? String.valueOf($s.getMonth()) : "CURRENT";
+    insert(new PartialSignal("stock", "SELL", 0.85, monthLabel));
+    System.out.println("📦 High stock & weak demand → bearish ("
+        + $s.getRegion() + ", month=" + monthLabel + ")");
 end
 
 // ⚖️ Neutral when stock levels and demand are within normal range
@@ -37,6 +43,8 @@ when
         demandChange <= 2.0
     )
 then
-    insertLogical(new MarketSignal("neutral", 0.5));
-    System.out.println("⚖️ Balanced stock & demand → neutral signal (" + $s.getRegion() + ")");
+    String monthLabel = $s.getMonth() > 0 ? String.valueOf($s.getMonth()) : "CURRENT";
+    insert(new PartialSignal("stock", "HOLD", 0.5, monthLabel));
+    System.out.println("⚖️ Balanced stock & demand → neutral ("
+        + $s.getRegion() + ", month=" + monthLabel + ")");
 end

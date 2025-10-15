@@ -21,7 +21,17 @@ public class Main {
         KieSession ksession = kc.newKieSession("ksession-rules");
 
         CoffeeDatasetLoader.loadDataset(ksession);
+
+        ksession.insert(new Weather("Brazil", "drought", 3.5, -10, 7));
+        ksession.insert(new Sentiment("Bloomberg", "positive", 0.8, 7));
+        ksession.insert(new Sentiment("Twitter", "negative", 0.7, 7));
+        ksession.insert(new WhaleActivity("2025-07", 12000, 250, 8, 5000, 2));
+        ksession.insert(new ExchangeRate("USDBRL", 5.35, 2.1, 1.8, 7));
+        ksession.insert(new StockDemand("Brazil", 800000, 1000000, 3.5, 2.8, 7));
+
+        // 3️⃣ Fire rules and get results
         ksession.fireAllRules();
+        ksession.dispose();
 
     }
 }
