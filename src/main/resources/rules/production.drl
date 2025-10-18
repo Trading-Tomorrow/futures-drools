@@ -1,0 +1,247 @@
+package rules
+
+dialect "java"
+
+import org.futures.model.Production;
+import org.futures.model.PartialSignal;
+import org.futures.model.Hypothesis;
+import org.futures.model.Commodity
+import java.util.Map
+import java.util.HashMap;
+
+//  Low Production
+rule "Production Low - Brasil Arabica"
+when
+    $commodity :Commodity(name=="Arabica")
+    $p : Production(country=="Brasil",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()<=5)
+then
+    switch ($p.getRegion()){
+        case "Minas Gerais": confidence=0.8;break;
+        case "São Paulo": confidence=0.8;break;
+        case "Bahia": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Low Production on Brasil",factors,confidence,"SELL"));
+end
+
+rule "Production Low - Colombia Arabica"
+when
+    $commodity :Commodity(name=="Arabica")
+    $p : Production(country=="Colombia",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()<=5)
+then
+    switch ($p.getRegion()){
+        case "Andina Cafeeira": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Low Production on Colombia",factors,confidence,"SELL"));
+end
+
+rule "Production Low - Brasil Robusta"
+when
+    $commodity :Commodity(name=="Robusta")
+    $p : Production(country=="Brasil",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()<=5)
+then
+    switch ($p.getRegion()){
+        case "Espirito Santo": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Low Production on Brasil",factors,confidence,"SELL"));
+end
+
+rule "Production Low - Vietnam Robusta"
+when
+    $commodity :Commodity(name=="Robusta")
+    $p : Production(country=="Vietnam",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()<=5)
+then
+    switch ($p.getRegion()){
+        case "Central Highlands": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Low Production on Vietnam",factors,confidence,"SELL"));
+end
+
+//  Average Production
+rule "Average Production - Brasil Arabica"
+when
+    $commodity :Commodity(name=="Arabica")
+    $p : Production(country=="Brasil",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval(5<$p.getProduction()<=25)
+then
+    switch ($p.getRegion()){
+        case "Minas Gerais": confidence=0.8;break;
+        case "São Paulo": confidence=0.8;break;
+        case "Bahia": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Average Production on Brasil",factors,confidence,"HOLD"));
+end
+
+rule "Average Production - Colombia Arabica"
+when
+    $commodity :Commodity(name=="Arabica")
+    $p : Production(country=="Colombia",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval(5<$p.getProduction()<=25)
+then
+    switch ($p.getRegion()){
+        case "Andina Cafeeira": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Average Production on Colombia",factors,confidence,"HOLD"));
+end
+
+rule "Average Production - Brasil Robusta"
+when
+    $commodity :Commodity(name=="Robusta")
+    $p : Production(country=="Brasil",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval(5<$p.getProduction()<=25)
+then
+    switch ($p.getRegion()){
+        case "Espirito Santo": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Average Production on Brasil",factors,confidence,"HOLD"));
+end
+
+rule "Average Production - Vietnam Robusta"
+when
+    $commodity :Commodity(name=="Robusta")
+    $p : Production(country=="Vietnam",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval(5<$p.getProduction()<=25)
+then
+    switch ($p.getRegion()){
+        case "Espirito Santo": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"Average Production on Vietnam",factors,confidence,"HOLD"));
+end
+
+//  High Production
+rule "High Production - Brasil Arabica"
+when
+    $commodity :Commodity(name=="Arabica")
+    $p : Production(country=="Brasil",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()>25)
+then
+    switch ($p.getRegion()){
+        case "Minas Gerais": confidence=0.8;break;
+        case "São Paulo": confidence=0.8;break;
+        case "Bahia": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"High Production on Brasil",factors,confidence,"BUY"));
+end
+
+rule "High Production - Colombia Arabica"
+when
+    $commodity :Commodity(name=="Arabica")
+    $p : Production(country=="Colombia",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()>25)
+then
+    switch ($p.getRegion()){
+        case "Andina Cafeeira": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"High Production on Colombia",factors,confidence,"BUY"));
+end
+
+rule "High Production - Brasil Robusta"
+when
+    $commodity :Commodity(name=="Robusta")
+    $p : Production(country=="Brasil",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()>25)
+then
+    switch ($p.getRegion()){
+        case "Espirito Santo": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"High Production on Brasil",factors,confidence,"BUY"));
+end
+
+rule "High Production - Vietnam Robusta"
+when
+    $commodity :Commodity(name=="Robusta")
+    $p : Production(country=="Vietnam",month==$commodity.getMonth(),commodity==$commodity.getName())
+    eval($p.getProduction()>25)
+then
+    switch ($p.getRegion()){
+        case "Central Highlands": confidence=0.8;break;
+    }
+
+    Map<String,Object> factors = new HashMap<>();
+    factors.put("country", $p.getCountry());
+    factors.put("region", $p.getRegion());
+    factors.put("month", $p.getMonth());
+    factors.put("production", $p.getProduction());
+
+    insert(new Hypothesis($p.getCommodity(),"High Production on Vietnam",factors,confidence,"BUY"));
+end

@@ -1,8 +1,19 @@
 package rules
 
-rule "Coffee price alert"
+dialect "java"
+
+import org.futures.model.Commodity;
+
+rule "Coffee Arabica alert"
 when
-    $coffee : String(this == "Arabica")
+    $c : Commodity(name=="Arabica")
 then
     System.out.println("☕ Arabica detected — watch futures closely!");
+end
+
+rule "Coffee Robusta alert"
+when
+    $c : Commodity(name=="Robusta")
+then
+    System.out.println("☕ Robusta detected — watch futures closely!");
 end
