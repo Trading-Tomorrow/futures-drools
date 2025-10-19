@@ -52,7 +52,10 @@ public class FuturesService {
 
         // 5️⃣ Captura resultados finais
         @SuppressWarnings("unchecked")
-        List<MarketSignal> signals = (List<MarketSignal>) ksession.getGlobal("signals");
+        List<MarketSignal> signals = ksession.getObjects(o -> o instanceof MarketSignal)
+                .stream()
+                .map(o -> (MarketSignal) o)
+                .toList();
 
 
         // ✅ Print no console antes de retornar
