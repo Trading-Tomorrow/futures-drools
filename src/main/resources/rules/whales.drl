@@ -15,7 +15,7 @@ rule "Bullish - Whale accumulation detected"
 when
     $commodity :Commodity()
     $v : Volume(month==$commodity.getMonth(),commodity==$commodity.getName())
-    eval($v.getBuyVolume() > ($v.getBuyVolume7d() * 2) && $v.getOpenInterest()>5 && $v.getTradeSize()>200)
+    eval($v.getBuyVolume() > ($v.getBuyVolume7d() * 2) && $v.getOpenInterest()>5 && $v.getTradeSize()>=50)
 then
     Map<String,Object> factors = new HashMap<>();
     factors.put("buyVolume", $v.getBuyVolume());
@@ -34,7 +34,7 @@ rule "Bearish - Whale distribution detected"
 when
     $commodity :Commodity()
     $v : Volume(month==$commodity.getMonth(),commodity==$commodity.getName())
-    eval($v.getBuyVolume() > ($v.getBuyVolume7d() * 2) && $v.getOpenInterest()<-5 && $v.getTradeSize()>200)
+    eval($v.getBuyVolume() > ($v.getBuyVolume7d() * 2) && $v.getOpenInterest()<-5 && $v.getTradeSize()>=50)
 then
     Map<String,Object> factors = new HashMap<>();
     factors.put("buyVolume", $v.getBuyVolume());

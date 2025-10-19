@@ -20,13 +20,26 @@ public class Main {
         CoffeeDatasetLoader.loadDataset(ksession);
 
         LocalDate today = LocalDate.now();
-        int investmentHorizon=3;
+        int investmentHorizon=4;
+        String commodity ="Arabica";
 
-        ksession.insert(new Commodity("Arábica",investmentHorizon,today.getMonthValue() + investmentHorizon));
+        ksession.insert(new Commodity(commodity,investmentHorizon,(today.getMonthValue() + investmentHorizon)%12));
         ksession.insert(new Investor("Conservative"));
 
 
         // 3️⃣ Fire rules and get results
+        ksession.getAgenda().getAgendaGroup("commodity-rules").setFocus();
+        ksession.fireAllRules();
+        if(commodity.equals("Arabica")){
+            ksession.getAgenda().getAgendaGroup("arabica").setFocus();
+            ksession.fireAllRules();
+        }else if(commodity.equals("Robusta")){
+            ksession.getAgenda().getAgendaGroup("robusta").setFocus();
+            ksession.fireAllRules();
+        }
+        ksession.fireAllRules();
+
+        ksession.getAgenda().getAgendaGroup("conclusions").setFocus();
         ksession.fireAllRules();
         ksession.dispose();
 

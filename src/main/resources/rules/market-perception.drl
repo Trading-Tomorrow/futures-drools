@@ -1,0 +1,57 @@
+package rules;
+dialect "java"
+
+import org.futures.model.Commodity;
+import org.futures.model.Hypothesis;
+import org.futures.model.MarketPerception
+import java.util.Map
+import java.util.HashMap;
+
+// Market Perception
+rule "Positive Perception"
+when
+    $commodity: Commodity()
+    $mp : MarketPerception(perception=="Positive",intensity>=0.6)
+then
+    Map<String, Object> factors = new HashMap<>();
+    factors.put("month", $commodity.getMonth());
+    factors.put("commodity", $commodity.getName());
+    factors.put("perception", $mp.getPerception());
+    factors.put("intensity", $mp.getIntensity());
+    factors.put("source", $mp.getSource());
+
+    insert(new Hypothesis($commodity.getName(),"Positive Perception",factors,0.5,"BUY"));
+    System.out.println("Positive Perception");
+end
+
+rule "Negative Perception"
+when
+    $commodity: Commodity()
+    $mp : MarketPerception(perception=="Negative",intensity>=0.6)
+then
+    Map<String, Object> factors = new HashMap<>();
+    factors.put("month", $commodity.getMonth());
+    factors.put("commodity", $commodity.getName());
+    factors.put("perception", $mp.getPerception());
+    factors.put("intensity", $mp.getIntensity());
+    factors.put("source", $mp.getSource());
+
+    insert(new Hypothesis($commodity.getName(),"Negative Perception",factors,0.5,"SELL"));
+    System.out.println("Negative Perception");
+end
+
+rule "Neutral Perception"
+when
+    $commodity: Commodity()
+    $mp : MarketPerception(intensity<0.6)
+then
+    Map<String, Object> factors = new HashMap<>();
+    factors.put("month", $commodity.getMonth());
+    factors.put("commodity", $commodity.getName());
+    factors.put("perception", $mp.getPerception());
+    factors.put("intensity", $mp.getIntensity());
+    factors.put("source", $mp.getSource());
+
+    insert(new Hypothesis($commodity.getName(),"Neutral Perception",factors,0.25,"HOLD"));
+    System.out.println("Neutral Perception");
+end

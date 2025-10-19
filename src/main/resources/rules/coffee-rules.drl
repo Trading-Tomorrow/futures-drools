@@ -5,6 +5,7 @@ dialect "java"
 import org.futures.model.Commodity;
 
 rule "Coffee Arabica alert"
+    agenda-group "commodity-rules"
 when
     $c : Commodity(name=="Arabica")
 then
@@ -12,6 +13,7 @@ then
 end
 
 rule "Coffee Robusta alert"
+    agenda-group "commodity-rules"
 when
     $c : Commodity(name=="Robusta")
 then
