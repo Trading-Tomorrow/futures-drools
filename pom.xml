@@ -4,9 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>futures</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.futures</groupId>
+    <artifactId>coffee-expert</artifactId>
+    <version>3.0.0</version>
+    <packaging>jar</packaging>
+
+    <name>Futures Experts System</name>
+    <description>REST API for Drools-based Futures Expert System</description>
+
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>3.3.2</version>
+        <relativePath/>
+    </parent>
 
     <properties>
         <maven.compiler.source>25</maven.compiler.source>
@@ -15,7 +27,9 @@
     </properties>
 
 
+
     <dependencies>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
@@ -27,11 +41,6 @@
             <version>9.44.0.Final</version>
         </dependency>
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>2.0.16</version>
-        </dependency>
-        <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-core</artifactId>
             <version>9.44.0.Final</version>
@@ -40,6 +49,10 @@
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
             <version>9.44.0.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
         <dependency>
             <groupId>org.kie</groupId>
