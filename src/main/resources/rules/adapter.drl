@@ -1,0 +1,74 @@
+package rules
+
+dialect "java"
+
+import java.util.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+
+import org.futures.model.PartialSignal;
+import org.futures.model.MarketSignal;
+
+import org.futures.explain.ExplainListener;
+global ExplainListener explain;
+
+rule "Aggregate current month market signal"
+    salience 50
+    no-loop true
+when
+    $signals : List() from collect( PartialSignal() )
+then
+    String currentMonth = ZonedDateTime.now(ZoneOffset.UTC)
+        .format(DateTimeFormatter.ofPattern("yyyy-MM"));
+
+    Map<String, double[]> monthMap = new HashMap<>();
+
+    for (Object s : $signals) {
+        PartialSignal ps = (PartialSignal) s;
+        if (!currentMonth.equals(ps.getMonth())) continue;
+
+        double[] sums = monthMap.getOrDefault(currentMonth, new double[]{0,0,0,0});
+        switch (ps.getDecision()) {
+            case "BUY":  sums[0] += ps.getConfidence(); break;
+            case "SELL": sums[1] += ps.getConfidence(); break;
+            case "HOLD": sums[2] += ps.getConfidence(); break;
+        }
+        sums[3] += ps.getConfidence();
+        monthMap.put(currentMonth, sums);
+    }
+
+    if (!monthMap.containsKey(currentMonth)) {
+        System.out.println("⚠️ No PartialSignal for " + currentMonth);
+        return;
+    }
+
+    double[] s = monthMap.get(currentMonth);
+    double buy = s[0], sell = s[1], hold = s[2], total = s[3] == 0 ? 1 : s[3];
+
+    String decision = "HOLD";
+    double conf = hold / total;
+
+    if (buy > sell * 1.1 && buy > hold) {
+        decision = "BUY";
+        conf = buy / total;
+    } else if (sell > buy * 1.1 && sell > hold) {
+        decision = "SELL";
+        conf = sell / total;
+    }
+
+    insert(new MarketSignal(currentMonth, decision, conf));
+
+    // HOW
+    explain.how(String.format(
+        "Month %s → BUY=%.2f, SELL=%.2f, HOLD=%.2f (total=%.2f)",
+        currentMonth, buy, sell, hold, total
+    ));
+
+    // WHY
+    explain.why(String.format(
+        "Decision '%s' because %.2f dominates (confidence %.2f)",
+        decision,
+        decision.equals("BUY") ? buy : decision.equals("SELL") ? sell : hold,
+        conf
+    ));
+end

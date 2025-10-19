@@ -5,6 +5,9 @@ dialect "java"
 import org.futures.model.Weather;
 import org.futures.model.PartialSignal;
 
+import org.futures.explain.ExplainListener
+global ExplainListener explain
+
 // ☀️ Drought or excessive heat → bullish (bad harvest risk)
 rule "Bullish - Drought or heatwave"
 when
@@ -12,9 +15,19 @@ when
 then
     String monthLabel = $w.getMonth() > 0 ? String.valueOf($w.getMonth()) : "CURRENT";
     insert(new PartialSignal("weather", "BUY", 0.8, monthLabel));
-    System.out.println("☀️ Drought/heatwave → bullish ("
-        + $w.getRegion() + ", ΔT=" + $w.getTemperatureDeviation()
-        + "°C, month=" + monthLabel + ")");
+
+    // HOW: evidência observada
+    explain.how(String.format(
+        "Drought/heatwave in %s (ΔT=%.1f°C, month=%s)",
+        $w.getRegion(), $w.getTemperatureDeviation(), monthLabel
+    ));
+
+    // WHY: decisão tomada com justificação
+    explain.why("Weather → BUY (crop stress risk, confidence=0.8)");
+
+    System.out.println("☀️ Drought/heatwave → bullish (" +
+        $w.getRegion() + ", ΔT=" + $w.getTemperatureDeviation() +
+        "°C, month=" + monthLabel + ")");
 end
 
 // ❄️ Frost → bullish (crop loss risk)
@@ -24,9 +37,16 @@ when
 then
     String monthLabel = $w.getMonth() > 0 ? String.valueOf($w.getMonth()) : "CURRENT";
     insert(new PartialSignal("weather", "BUY", 0.9, monthLabel));
-    System.out.println("❄️ Frost → bullish ("
-        + $w.getRegion() + ", ΔT=" + $w.getTemperatureDeviation()
-        + "°C, month=" + monthLabel + ")");
+
+    explain.how(String.format(
+        "Frost conditions in %s (ΔT=%.1f°C, month=%s)",
+        $w.getRegion(), $w.getTemperatureDeviation(), monthLabel
+    ));
+    explain.why("Weather → BUY (frost damage risk, confidence=0.9)");
+
+    System.out.println("❄️ Frost → bullish (" +
+        $w.getRegion() + ", ΔT=" + $w.getTemperatureDeviation() +
+        "°C, month=" + monthLabel + ")");
 end
 
 // 🌧️ Excess rain → bearish (better yields expected)
@@ -36,9 +56,16 @@ when
 then
     String monthLabel = $w.getMonth() > 0 ? String.valueOf($w.getMonth()) : "CURRENT";
     insert(new PartialSignal("weather", "SELL", 0.7, monthLabel));
-    System.out.println("🌧️ Excess rain → bearish ("
-        + $w.getRegion() + ", ΔRain=" + $w.getPrecipitationDeviation()
-        + "%, month=" + monthLabel + ")");
+
+    explain.how(String.format(
+        "Excess rain in %s (ΔRain=%.0f%%, month=%s)",
+        $w.getRegion(), $w.getPrecipitationDeviation(), monthLabel
+    ));
+    explain.why("Weather → SELL (better yields expected, confidence=0.7)");
+
+    System.out.println("🌧️ Excess rain → bearish (" +
+        $w.getRegion() + ", ΔRain=" + $w.getPrecipitationDeviation() +
+        "%, month=" + monthLabel + ")");
 end
 
 // 🌤️ Ideal conditions → neutral
@@ -48,6 +75,13 @@ when
 then
     String monthLabel = $w.getMonth() > 0 ? String.valueOf($w.getMonth()) : "CURRENT";
     insert(new PartialSignal("weather", "HOLD", 0.5, monthLabel));
-    System.out.println("🌤️ Ideal weather → neutral ("
-        + $w.getRegion() + ", month=" + monthLabel + ")");
+
+    explain.how(String.format(
+        "Ideal weather in %s (month=%s)",
+        $w.getRegion(), monthLabel
+    ));
+    explain.why("Weather → HOLD (balanced conditions, confidence=0.5)");
+
+    System.out.println("🌤️ Ideal weather → neutral (" +
+        $w.getRegion() + ", month=" + monthLabel + ")");
 end

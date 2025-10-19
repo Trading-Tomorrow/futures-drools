@@ -2,8 +2,14 @@ package org.futures;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.futures.explain.DecisionExplanation;
 import org.futures.model.*;
+import org.futures.model.enums.CoffeeType;
+import org.futures.model.enums.Horizon;
+import org.futures.model.enums.InvestorProfile;
 import org.kie.api.KieServices;
+import org.kie.api.event.rule.AgendaEventListener;
+import org.kie.api.event.rule.RuleRuntimeEventListener;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 
@@ -20,6 +26,17 @@ public class Main {
         KieContainer kc = ks.getKieClasspathContainer();
         KieSession ksession = kc.newKieSession("ksession-rules");
 
+        //Add event Listener
+        var explainlistener = new org.futures.explain.ExplainListener();
+        ksession.addEventListener((RuleRuntimeEventListener) explainlistener);
+        ksession.addEventListener((AgendaEventListener) explainlistener);
+        ksession.setGlobal("explain", explainlistener);
+
+
+        // Add frontend inputs
+        Inputs inputs = new Inputs(Horizon.SHORT, CoffeeType.ARABICA, InvestorProfile.BALANCED);
+        ksession.insert(inputs);
+
         CoffeeDatasetLoader.loadDataset(ksession);
 
         ksession.insert(new Weather("Brazil", "drought", 3.5, -10, 7));
@@ -31,6 +48,18 @@ public class Main {
 
         // 3️⃣ Fire rules and get results
         ksession.fireAllRules();
+
+        DecisionExplanation de = explainlistener.build();
+
+        System.out.println("\n=== 📜 HOW ===");
+        de.getHow().forEach(System.out::println);
+
+        System.out.println("\n=== ❓ WHY ===");
+        de.getWhy().forEach(System.out::println);
+
+        System.out.println("\n=== 🚫 WHY NOT ===");
+        de.getWhyNot().forEach(System.out::println);
+
         ksession.dispose();
 
     }
