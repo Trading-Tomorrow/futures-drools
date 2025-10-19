@@ -21,7 +21,7 @@ public class FuturesService {
 
     }
 
-    public List<MarketSignal> evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
+    public EvaluationResult evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
         // 1️⃣ Cria nova sessão Drools
         KieSession ksession = kieContainer.newKieSession("ksession-rules");
 
@@ -51,7 +51,12 @@ public class FuturesService {
         ksession.fireAllRules();
 
         // 5️⃣ Captura resultados finais
-        @SuppressWarnings("unchecked")
+
+        List<Hypothesis> hypotheses = ksession.getObjects(o -> o instanceof Hypothesis)
+                .stream()
+                .map(o -> (Hypothesis) o)
+                .toList();
+
         List<MarketSignal> signals = ksession.getObjects(o -> o instanceof MarketSignal)
                 .stream()
                 .map(o -> (MarketSignal) o)
@@ -72,6 +77,7 @@ public class FuturesService {
 
         ksession.dispose();
 
-        return signals;
+        return new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
+
     }
 }
