@@ -1,0 +1,48 @@
+package rules
+
+dialect "java"
+
+import org.futures.model.PartialSignal;
+import org.futures.model.Inputs;
+import org.futures.model.enums.Horizon;
+import org.futures.model.enums.CoffeeType;
+import org.futures.model.enums.InvestorProfile;
+
+// ⚙️ Perfil: conservador reduz agressividade em BUY; agressivo reforça BUY/SELL
+rule "Adjust weight - profile CONSERVATIVE"
+when
+    Inputs(profile == InvestorProfile.CONSERVATIVE)
+    $p : PartialSignal(decision == "BUY")
+then
+    modify($p){ setConfidence($p.getConfidence() * 0.85) }
+    System.out.println("⚖️ CONSERVATIVE ⇒ reduz BUY");
+end
+
+rule "Adjust weight - profile AGGRESSIVE"
+when
+    Inputs(profile == InvestorProfile.AGGRESSIVE)
+    $p : PartialSignal(decision in ("BUY","SELL"))
+then
+    modify($p){ setConfidence($p.getConfidence() * 1.10) }
+    System.out.println("⚡ AGGRESSIVE ⇒ reforça " + $p.getDecision());
+end
+
+// ☕ Tipo de café: ARABICA é mais sensível ao clima ⇒ reforça 'weather'
+rule "Adjust weight - ARABICA favors weather"
+when
+    Inputs(coffeeType == CoffeeType.ARABICA)
+    $p : PartialSignal(category == "weather")
+then
+    modify($p){ setConfidence($p.getConfidence() * 1.15) }
+    System.out.println("☕ ARABICA ⇒ reforça weather");
+end
+
+// 📅 Horizonte LONG: suaviza sinais de curto prazo (ex.: 'sentiment')
+rule "Adjust weight - LONG horizon smooths sentiment"
+when
+    Inputs(horizon == Horizon.LONG)
+    $p : PartialSignal(category == "sentiment")
+then
+    modify($p){ setConfidence($p.getConfidence() * 0.90) }
+    System.out.println("📅 LONG ⇒ suaviza sentiment");
+end

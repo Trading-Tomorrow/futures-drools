@@ -18,6 +18,11 @@ public class PartialSignal {
     public double getConfidence() { return confidence; }
     public String getMonth() { return month; }
 
+    public void setConfidence(double confidence) { this.confidence = confidence; }
+    public void setDecision(String decision)     { this.decision = decision; }
+    public void setCategory(String category)     { this.category = category; }
+    public void setMonth(String month)           { this.month = month; }
+
     @Override
     public String toString() {
         return String.format("[%s → %s (%.2f)]", category, decision, confidence);
