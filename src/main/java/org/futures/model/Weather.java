@@ -1,23 +1,42 @@
 package org.futures.model;
 
 public class Weather {
+    private String country;
     private String region;
-    private String condition; // e.g., "drought", "rain", "frost", "ideal"
-    private double temperatureDeviation; // from normal, in °C
-    private double precipitationDeviation; // percentage from normal
-    private int month; // 1-12
+    private int month; // e.g., "drought", "rain", "frost", "ideal"
+    private double temperature; // from normal, in °C
+    private double spi; // percentage from normal
 
-    public Weather(String region, String condition, double temperatureDeviation, double precipitationDeviation, int month) {
+    public Weather(String country, String region, int month, double temperature, double spi) {
+        this.country = country;
         this.region = region;
-        this.condition = condition;
-        this.temperatureDeviation = temperatureDeviation;
-        this.precipitationDeviation = precipitationDeviation;
         this.month = month;
+        this.temperature = temperature;
+        this.spi = spi;
     }
 
-    public String getRegion() { return region; }
-    public String getCondition() { return condition; }
-    public double getTemperatureDeviation() { return temperatureDeviation; }
-    public double getPrecipitationDeviation() { return precipitationDeviation; }
-    public int getMonth() { return month; }
+    public String getRegion() {
+        return region;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public double getTemperature() {
+        return temperature;
+    }
+
+    public double getSpi() {
+        return spi;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Weather[%s-%s-%s: temp=%.1f°C, SPI=%.2f]", country, region, month, temperature, spi);
+    }
 }
