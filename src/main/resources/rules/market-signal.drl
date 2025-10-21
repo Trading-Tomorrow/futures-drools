@@ -13,6 +13,7 @@ rule "ADD CONFIDENCES"
 agenda-group "conclusions"
 when
     $signals : List() from collect(Hypothesis())
+    $pw : ProfileWeights( $wBuy : buyW, $wSell : sellW, $wHold : holdW )
 then
     double buy=0.0;
     double sell=0.0;
@@ -35,6 +36,13 @@ then
         }
         total+=h.getConfidence();
     }
+
+    // aplica pesos consoante o perfil
+        buy  = buy  * $wBuy;
+        sell = sell * $wSell;
+        hold = hold * $wHold;
+
+        total = (buy + sell + hold);
 
     total=total==0?1:total;
 

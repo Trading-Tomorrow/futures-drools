@@ -47,6 +47,9 @@ public class FuturesService {
             ksession.fireAllRules();
         }
 
+        ksession.getAgenda().getAgendaGroup("profile-weights").setFocus();
+        ksession.fireAllRules();
+
         ksession.getAgenda().getAgendaGroup("conclusions").setFocus();
         ksession.fireAllRules();
 
