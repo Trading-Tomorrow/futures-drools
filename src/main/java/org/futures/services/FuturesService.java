@@ -9,33 +9,38 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FuturesService {
 
     private final KieContainer kieContainer;
+    private final BacktestingService backtestingSerivce;
 
     public FuturesService() {
         KieServices ks = KieServices.Factory.get();
         this.kieContainer = ks.getKieClasspathContainer();
-
+        this.backtestingSerivce = new BacktestingService(kieContainer);
     }
 
     public EvaluationResult evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
-        // 1️⃣ Cria nova sessão Drools
+
+        Map<Integer, EvaluationResult> backtestingResults = this.backtestingSerivce.runBacktest(commodityName, investorProfile);
+
+
         KieSession ksession = kieContainer.newKieSession("ksession-rules");
 
-        // 2️⃣ Carrega dataset base (estoques, clima, taxa de câmbio, etc.)
+
         CoffeeDatasetLoader.loadDataset(ksession);
 
-        // 3️⃣ Insere fatos principais
+
         LocalDate today = LocalDate.now();
         int targetMonth = (today.getMonthValue() + investmentHorizon) % 12;
 
         ksession.insert(new Commodity(commodityName, investmentHorizon, targetMonth));
         ksession.insert(new Investor(investorProfile));
 
-        // 4️⃣ Executa regras por agenda group
+
         ksession.getAgenda().getAgendaGroup("commodity-rules").setFocus();
         ksession.fireAllRules();
 
@@ -53,7 +58,6 @@ public class FuturesService {
         ksession.getAgenda().getAgendaGroup("conclusions").setFocus();
         ksession.fireAllRules();
 
-        // 5️⃣ Captura resultados finais
 
         List<Hypothesis> hypotheses = ksession.getObjects(o -> o instanceof Hypothesis)
                 .stream()
@@ -80,7 +84,7 @@ public class FuturesService {
 
         ksession.dispose();
 
-        return new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
+        return new EvaluationResult(commodityName, investorProfile, signals, hypotheses, backtestingResults);
 
     }
 }
