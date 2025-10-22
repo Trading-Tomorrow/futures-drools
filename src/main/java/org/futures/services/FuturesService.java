@@ -16,14 +16,16 @@ public class FuturesService {
 
     private final KieContainer kieContainer;
     private final BacktestingService backtestingSerivce;
+    private final SimilarityService similarityService;
 
     public FuturesService() {
         KieServices ks = KieServices.Factory.get();
         this.kieContainer = ks.getKieClasspathContainer();
         this.backtestingSerivce = new BacktestingService(kieContainer);
+        this.similarityService = new SimilarityService();
     }
 
-    public EvaluationResult evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
+    public FinalResponse evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
 
         Map<Integer, EvaluationResult> backtestingResults = this.backtestingSerivce.runBacktest(commodityName, investorProfile);
 
@@ -71,6 +73,8 @@ public class FuturesService {
                 .toList();
 
 
+
+
         // ✅ Print no console antes de retornar
         System.out.println("📊 --- Market Signals ---");
         if (signals == null || signals.isEmpty()) {
@@ -85,7 +89,9 @@ public class FuturesService {
 
         ksession.dispose();
 
-        return new EvaluationResult(commodityName, investorProfile, signals, hypotheses, backtestingResults);
+        EvaluationResult evaluationResult = new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
+        List<SimilarityService.SimilarityMatch> similarMonths = this.similarityService.findSimilarMonths(evaluationResult, backtestingResults, 0.4);
 
+        return new FinalResponse(evaluationResult,  backtestingResults, similarMonths);
     }
 }

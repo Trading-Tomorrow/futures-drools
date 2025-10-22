@@ -9,7 +9,6 @@ public class EvaluationResult {
     private final String investor;
     private final List<MarketSignal> signals;
     private final List<Hypothesis> hypotheses;
-    private final Optional<Map<Integer, EvaluationResult>> backtesting;
 
     // ✅ Constructor for main results (with backtesting)
     public EvaluationResult(String commodity, String investor,
@@ -20,7 +19,6 @@ public class EvaluationResult {
         this.investor = investor;
         this.signals = signals;
         this.hypotheses = hypotheses;
-        this.backtesting = Optional.ofNullable(backtesting);
     }
 
     // ✅ Overloaded constructor for cases without backtesting
@@ -46,7 +44,4 @@ public class EvaluationResult {
         return hypotheses;
     }
 
-    public Optional<Map<Integer, EvaluationResult>> getBacktesting() {
-        return backtesting;
-    }
 }

@@ -1,6 +1,7 @@
 package org.futures.controllers;
 
 import org.futures.model.EvaluationResult;
+import org.futures.model.FinalResponse;
 import org.futures.model.MarketSignal;
 import org.futures.services.FuturesService;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class FuturesController {
     }
 
     @GetMapping("/evaluate")
-    public EvaluationResult evaluate(
+    public FinalResponse evaluate(
             @RequestParam String commodity,
             @RequestParam(defaultValue = "3") int horizon,
             @RequestParam(defaultValue = "Conservative") String investor
