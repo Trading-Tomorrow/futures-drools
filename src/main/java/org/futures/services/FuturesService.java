@@ -84,4 +84,8 @@ public class FuturesService {
         return new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
 
     }
+    public static boolean debugLhsValue(Object value) {
+        System.out.println(value);
+        return true;
+    }
 }
