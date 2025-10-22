@@ -37,7 +37,7 @@ then
         total+=h.getConfidence();
     }
 
-    // aplica pesos consoante o perfil
+    // apply profile weights
         buy  = buy  * $wBuy;
         sell = sell * $wSell;
         hold = hold * $wHold;

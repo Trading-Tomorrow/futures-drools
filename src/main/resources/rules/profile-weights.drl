@@ -17,7 +17,7 @@ end
 rule "PROFILE WEIGHTS - Conservative"
 agenda-group "profile-weights"
 when
-  Investor( profile.toLowerCase matches "(Conservative)" )
+  Investor( profile.toLowerCase matches "(conservative)" )
 then
   insertLogical(new ProfileWeights(0.9, 1.1, 1.0));
   System.out.println("─────────────────────────────────────────────");
@@ -31,7 +31,7 @@ end
 rule "PROFILE WEIGHTS - Balanced"
 agenda-group "profile-weights"
 when
-  Investor( profile.toLowerCase matches "(Balanced)" )
+  Investor( profile.toLowerCase matches "(balanced)" )
 then
   insertLogical(new ProfileWeights(1.0, 1.0, 1.0));
   System.out.println("─────────────────────────────────────────────");
@@ -45,7 +45,7 @@ end
 rule "PROFILE WEIGHTS - Aggressive"
 agenda-group "profile-weights"
 when
-  Investor( profile.toLowerCase matches "(Aggressive)" )
+  Investor( profile.toLowerCase matches "(aggressive)" )
 then
   insertLogical(new ProfileWeights(1.1, 0.9, 1.0));
   System.out.println("─────────────────────────────────────────────");
