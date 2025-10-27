@@ -1,5 +1,5 @@
 package rules
-
+import function org.futures.services.FuturesService.debugLhsValue;
 dialect "java"
 
 import java.util.List;
@@ -15,6 +15,7 @@ when
     $signals : List() from collect(Hypothesis())
     $pw : ProfileWeights( $wBuy : buyW, $wSell : sellW, $wHold : holdW )
 then
+
     double buy=0.0;
     double sell=0.0;
     double hold=0.0;
@@ -34,6 +35,7 @@ then
                 hold+=h.getConfidence();
                 break;
         }
+        //boolean debug = debugLhsValue(h.getConfidence()); para debug, meter breakpoint na funcao debugLhsValue
         total+=h.getConfidence();
     }
 
@@ -49,6 +51,7 @@ then
     String finalDecision = "HOLD";
     double finalConf = 0.0;
 
+//1.1 serve como margem de 10%
     if (buy > sell * 1.1 && buy > hold) {
         finalDecision = "BUY";
         finalConf = buy / total;
@@ -59,7 +62,7 @@ then
         finalConf = hold / total;
     }
 
-    insert(new MarketSignal("ALL", finalDecision, finalConf));
+    insert(new MarketSignal("ALL", finalDecision, finalConf, sell/total, buy/total, hold/total));
 
     System.out.println("─────────────────────────────────────────────");
     System.out.println("📊 Aggregated MarketSignal (all signals combined)");

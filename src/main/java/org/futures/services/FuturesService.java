@@ -94,4 +94,8 @@ public class FuturesService {
 
         return new FinalResponse(evaluationResult,  backtestingResults, similarMonths);
     }
+    public static boolean debugLhsValue(Object value) {
+        System.out.println(value);
+        return true;
+    }
 }
