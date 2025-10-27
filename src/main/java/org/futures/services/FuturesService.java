@@ -9,33 +9,40 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class FuturesService {
 
     private final KieContainer kieContainer;
+    private final BacktestingService backtestingSerivce;
+    private final SimilarityService similarityService;
 
     public FuturesService() {
         KieServices ks = KieServices.Factory.get();
         this.kieContainer = ks.getKieClasspathContainer();
-
+        this.backtestingSerivce = new BacktestingService(kieContainer);
+        this.similarityService = new SimilarityService();
     }
 
-    public EvaluationResult evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
-        // 1️⃣ Cria nova sessão Drools
+    public FinalResponse evaluateCommodity(String commodityName, int investmentHorizon, String investorProfile) {
+
+        Map<Integer, EvaluationResult> backtestingResults = this.backtestingSerivce.runBacktest(commodityName, investorProfile);
+
+
         KieSession ksession = kieContainer.newKieSession("ksession-rules");
 
-        // 2️⃣ Carrega dataset base (estoques, clima, taxa de câmbio, etc.)
+
         CoffeeDatasetLoader.loadDataset(ksession);
 
-        // 3️⃣ Insere fatos principais
+
         LocalDate today = LocalDate.now();
         int targetMonth = (today.getMonthValue() + investmentHorizon) % 12;
 
         ksession.insert(new Commodity(commodityName, investmentHorizon, targetMonth));
         ksession.insert(new Investor(investorProfile));
 
-        // 4️⃣ Executa regras por agenda group
+
         ksession.getAgenda().getAgendaGroup("commodity-rules").setFocus();
         ksession.fireAllRules();
 
@@ -54,7 +61,6 @@ public class FuturesService {
         ksession.getAgenda().getAgendaGroup("conclusions").setFocus();
         ksession.fireAllRules();
 
-        // 5️⃣ Captura resultados finais
 
         List<Hypothesis> hypotheses = ksession.getObjects(o -> o instanceof Hypothesis)
                 .stream()
@@ -65,6 +71,8 @@ public class FuturesService {
                 .stream()
                 .map(o -> (MarketSignal) o)
                 .toList();
+
+
 
 
         // ✅ Print no console antes de retornar
@@ -81,8 +89,10 @@ public class FuturesService {
 
         ksession.dispose();
 
-        return new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
+        EvaluationResult evaluationResult = new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
+        List<SimilarityService.SimilarityMatch> similarMonths = this.similarityService.findSimilarMonths(evaluationResult, backtestingResults, 0.4);
 
+        return new FinalResponse(evaluationResult,  backtestingResults, similarMonths);
     }
     public static boolean debugLhsValue(Object value) {
         System.out.println(value);
