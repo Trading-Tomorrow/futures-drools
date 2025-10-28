@@ -5,223 +5,234 @@ dialect "java"
 import org.futures.model.Weather;
 import org.futures.model.Commodity;
 import org.futures.model.Hypothesis;
-import org.futures.model.PartialSignal
-import java.util.Map
+import org.futures.model.PartialSignal;
+import org.futures.model.AvailableRegion;
+import java.util.Map;
 import java.util.HashMap;
 
-//Drought or excessive heat → bullish (bad harvest risk)
-rule "Bullish (Drought or heatwave) - Brasil Arabica"
+rule "Drought - Brasil Arabica"
     agenda-group "arabica"
 when
     $commodity :Commodity(name=="Arabica")
     $w : Weather(country=="Brasil",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval($w.getTemperature() > 24 && $w.getSpi()<=-1)
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Minas Gerais": confidence=0.8;break;
-        case "São Paulo": confidence=0.8;break;
-        case "Bahia": confidence=0.8;break;
+        case "Minas Gerais": confidence=0.93;break;
+        case "São Paulo": confidence=0.82;break;
+        case "Bahia": confidence=0.6;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
-    insert(new Hypothesis($commodity.getName(),"Drought or heatwave",factors,confidence,"BUY"));
-    System.out.println("☀️ Drought/heatwave → bullish ("+ $w.getRegion() + ", Temperature=" + $w.getTemperature()+ "°C,SPI="+$w.getSpi()+ " month=" + $w.getMonth() + ")");
+    insert(new Hypothesis($commodity.getName(),"Drought - Brasil",factors,confidence,"BUY"));
+
+    System.out.println("Drought - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
 
-rule "Bullish (Drought or heatwave) - Colombia Arabica"
+rule "Drought - Colombia Arabica"
     agenda-group "arabica"
 when
     $commodity :Commodity(name=="Arabica")
     $w : Weather(country=="Colombia",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval($w.getTemperature() > 24 && $w.getSpi()<=-1)
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Andina Cafeeira" : confidence=0.80;break;
+        case "Andina Cafeeira" : confidence=0.86;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
-    insert(new Hypothesis($commodity.getName(),"Drought or heatwave",factors,confidence,"BUY"));
-    System.out.println("☀️ Drought/heatwave → bullish ("+ $w.getRegion() + ", Temperature=" + $w.getTemperature()+ "°C,SPI="+$w.getSpi()+ " month=" + $w.getMonth() + ")");
+    insert(new Hypothesis($commodity.getName(),"Drought - Colombia",factors,confidence,"BUY"));
+    System.out.println("Drought - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
 
-rule "Bullish (Drought or heatwave) - Brasil Robusta"
+rule "Drought - Brasil Robusta"
     agenda-group "robusta"
 when
     $commodity :Commodity(name=="Robusta")
     $w : Weather(country=="Brasil",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval($w.getTemperature() > 33 && $w.getSpi()<=-1)
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Espirito Santo": confidence=0.8;break;
+        case "Espirito Santo": confidence=0.77;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
-    insert(new Hypothesis($commodity.getName(),"Drought or heatwave",factors,confidence,"BUY"));
-    System.out.println("☀️ Drought/heatwave → bullish ("+ $w.getRegion() + ", Temperature=" + $w.getTemperature()+ "°C,SPI="+$w.getSpi()+ " month=" + $w.getMonth() + ")");
+    insert(new Hypothesis($commodity.getName(),"Drought - Brasil",factors,confidence,"BUY"));
+    System.out.println("Drought - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
 
-rule "Bullish (Drought or heatwave) - Vietnam Robusta"
+rule "Drought - Vietnam Robusta"
     agenda-group "robusta"
 when
    $commodity :Commodity(name=="Robusta")
    $w : Weather(country=="Vietnam",month==$commodity.getMonth())
+   $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
    eval($w.getTemperature() > 33 && $w.getSpi()<=-1)
 then
     double confidence=0.0;
    switch($w.getRegion()){
-       case "Central Highlands": confidence=0.8;break;
+       case "Central Highlands": confidence=0.95;break;
    }
 
    Map<String, Object> factors = new HashMap<>();
-   factors.put("month", $commodity.getMonth());
-   factors.put("country", $w.getCountry());
-   factors.put("temperature", $w.getTemperature());
-   factors.put("spi", $w.getSpi());
+    factors.put("month", $commodity.getMonth());
+    factors.put("temperature", $w.getTemperature());
+    factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
+    factors.put("spi", $w.getSpi());
 
-   insert(new Hypothesis($commodity.getName(),"Drought or heatwave",factors,confidence,"BUY"));
-   System.out.println("☀️ Drought/heatwave → bullish ("+ $w.getRegion() + ", Temperature=" + $w.getTemperature()+ "°C,SPI="+$w.getSpi()+ " month=" + $w.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Drought - Vietnam",factors,confidence,"BUY"));
+    System.out.println("Drought - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
-
-
-
-// 🌤️ Ideal conditions → neutral
-
-rule "Neutral Ideal conditions - Brasil Arabica"
+rule "Ideal Weather - Brasil Arabica"
     agenda-group "arabica"
 when
     $commodity :Commodity(name=="Arabica")
     $w : Weather(country=="Brasil",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(18<=$w.getTemperature() && $w.getTemperature()<=24 && -1<$w.getSpi() && $w.getSpi()<1)
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Minas Gerais": confidence=0.8;break;
-        case "São Paulo": confidence=0.8;break;
-        case "Bahia": confidence=0.8;break;
+        case "Minas Gerais": confidence=0.89;break;
+        case "São Paulo": confidence=0.76;break;
+        case "Bahia": confidence=0.57;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
 
-   insert(new Hypothesis($commodity.getName(),"Ideal weather",factors,confidence,"HOLD"));
-   System.out.println("🌤️ Ideal weather → neutral ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
-
+   insert(new Hypothesis($commodity.getName(),"Ideal Weather - Brasil",factors,confidence,"HOLD"));
+    System.out.println("Ideal Weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=HOLD");
 end
 
-rule "Neutral Ideal conditions - Colombia Arabica"
+rule "Ideal Weather - Colombia Arabica"
     agenda-group "arabica"
 when
     $commodity :Commodity(name=="Arabica")
     $w : Weather(country=="Colombia",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(18<= $w.getTemperature() && $w.getTemperature()<=24 && -1<$w.getSpi() && $w.getSpi()<1)
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Andina Cafeeira" : confidence=0.80;break;
+        case "Andina Cafeeira" : confidence=0.79;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
 
-   insert(new Hypothesis($commodity.getName(),"Ideal weather",factors,confidence,"HOLD"));
-   System.out.println("🌤️ Ideal weather → neutral ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Ideal Weather - Colombia",factors,confidence,"HOLD"));
+    System.out.println("Ideal Weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=HOLD");
 end
 
-rule "Neutral Ideal conditions - Brasil Robusta"
+rule "Ideal Weather - Brasil Robusta"
     agenda-group "robusta"
 when
     $commodity :Commodity(name=="Robusta")
     $w : Weather(country=="Brasil",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(24<=$w.getTemperature() && $w.getTemperature()<=33 && -1<$w.getSpi() && $w.getSpi()<1)
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Espirito Santo": confidence=0.8;break;
+        case "Espirito Santo": confidence=0.72;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
-   insert(new Hypothesis($commodity.getName(),"Ideal weather",factors,confidence,"HOLD"));
-   System.out.println("🌤️ Ideal weather → neutral ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Ideal weather - Brasil",factors,confidence,"HOLD"));
+    System.out.println("Ideal Weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=HOLD");
 end
 
-rule "Neutral Ideal conditions - Vietnam Robusta"
+rule "Ideal Weather - Vietnam Robusta"
     agenda-group "robusta"
 when
-   $commodity :Commodity(name=="Robusta")
-   $w : Weather(country=="Vietnam",month==$commodity.getMonth())
+    $commodity :Commodity(name=="Robusta")
+    $w : Weather(country=="Vietnam",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(24<=$w.getTemperature() && $w.getTemperature()<=33 && -1<$w.getSpi() && $w.getSpi()<1)
 then
     double confidence=0.0;
    switch($w.getRegion()){
-       case "Central Highlands": confidence=0.8;break;
+       case "Central Highlands": confidence=0.92;break;
    }
 
    Map<String, Object> factors = new HashMap<>();
-   factors.put("month", $commodity.getMonth());
-   factors.put("country", $w.getCountry());
-   factors.put("temperature", $w.getTemperature());
-   factors.put("spi", $w.getSpi());
+    factors.put("month", $commodity.getMonth());
+    factors.put("temperature", $w.getTemperature());
+    factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
+    factors.put("spi", $w.getSpi());
 
-   insert(new Hypothesis($commodity.getName(),"Ideal weather",factors,confidence,"HOLD"));
-   System.out.println("🌤️ Ideal weather → neutral ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Ideal Weather - Vietnam",factors,confidence,"HOLD"));
+   System.out.println("Ideal Weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=HOLD");
 end
-
-// 🌤️ Non-Ideal conditions → neutral
 
 rule "Non-Ideal conditions - Brasil Arabica"
     agenda-group "arabica"
 when
     $commodity :Commodity(name=="Arabica")
     $w : Weather(country=="Brasil",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(!(($w.getTemperature() > 24 && $w.getSpi()<=-1) || (18<=$w.getTemperature() && $w.getTemperature()<=24 && -1<$w.getSpi() && $w.getSpi()<1)))
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Minas Gerais": confidence=0.8;break;
-        case "São Paulo": confidence=0.8;break;
-        case "Bahia": confidence=0.8;break;
+        case "Minas Gerais": confidence=0.89;break;
+        case "São Paulo": confidence=0.76;break;
+        case "Bahia": confidence=0.57;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
 
-   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather",factors,confidence,"BUY"));
-   System.out.println("🌤️ Non-Ideal weather → ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather - Brasil",factors,confidence,"BUY"));
+   System.out.println("Non-Ideal weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 
 end
 
@@ -230,22 +241,24 @@ rule "Non-Ideal conditions - Colombia Arabica"
 when
     $commodity :Commodity(name=="Arabica")
     $w : Weather(country=="Colombia",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(!(($w.getTemperature() > 24 && $w.getSpi()<=-1) || (18<=$w.getTemperature() && $w.getTemperature()<=24 && -1<$w.getSpi() && $w.getSpi()<1)))
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Andina Cafeeira" : confidence=0.80;break;
+        case "Andina Cafeeira" : confidence=0.79;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
 
-   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather",factors,confidence,"BUY"));
-   System.out.println("🌤️ Non-Ideal weather → ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather - Colombia",factors,confidence,"BUY"));
+   System.out.println("Non-Ideal weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
 
 rule "Non-Ideal conditions - Brasil Robusta"
@@ -253,21 +266,23 @@ rule "Non-Ideal conditions - Brasil Robusta"
 when
     $commodity :Commodity(name=="Robusta")
     $w : Weather(country=="Brasil",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(!(($w.getTemperature() > 33 && $w.getSpi()<=-1) || (24<= $w.getTemperature() && $w.getTemperature()<=33 && -1<$w.getSpi() && $w.getSpi()<1)))
 then
     double confidence=0.0;
     switch($w.getRegion()){
-        case "Espirito Santo": confidence=0.8;break;
+        case "Espirito Santo": confidence=0.72;break;
     }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("month", $commodity.getMonth());
     factors.put("temperature", $w.getTemperature());
     factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
     factors.put("spi", $w.getSpi());
 
-   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather",factors,confidence,"BUY"));
-   System.out.println("🌤️ Non-Ideal weather → ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather - Brasil",factors,confidence,"BUY"));
+   System.out.println("Non-Ideal Weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
 
 rule "Non-Ideal conditions - Vietnam Robusta"
@@ -275,21 +290,23 @@ rule "Non-Ideal conditions - Vietnam Robusta"
 when
    $commodity :Commodity(name=="Robusta")
    $w : Weather(country=="Vietnam",month==$commodity.getMonth())
+    $r: AvailableRegion(country==$w.getCountry(),region==$w.getRegion())
     eval(!(($w.getTemperature() > 33 && $w.getSpi()<=-1) || (24<=$w.getTemperature() && $w.getTemperature()<=33 && -1<$w.getSpi() && $w.getSpi()<1)))
 then
     double confidence=0.0;
-   switch($w.getRegion()){
-       case "Central Highlands": confidence=0.8;break;
-   }
+    switch($w.getRegion()){
+        case "Central Highlands": confidence=0.92;break;
+    }
 
-   Map<String, Object> factors = new HashMap<>();
-   factors.put("month", $commodity.getMonth());
-   factors.put("country", $w.getCountry());
-   factors.put("temperature", $w.getTemperature());
-   factors.put("spi", $w.getSpi());
+    Map<String, Object> factors = new HashMap<>();
+    factors.put("month", $commodity.getMonth());
+    factors.put("temperature", $w.getTemperature());
+    factors.put("country", $w.getCountry());
+    factors.put("region", $w.getRegion());
+    factors.put("spi", $w.getSpi());
 
-   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather",factors,confidence,"BUY"));
-   System.out.println("🌤️ Non-Ideal weather → ("+ $w.getRegion() + ", month=" + $commodity.getMonth() + ")");
+   insert(new Hypothesis($commodity.getName(),"Non-Ideal weather - Vietnam",factors,confidence,"BUY"));
+   System.out.println("Non-Ideal weather - country=" + $w.getCountry() + ", region=" + $w.getRegion() + ", commodity=" + $commodity.getName() + ", month=" + $commodity.getMonth() + ", temperature=" + $w.getTemperature() + ", spi=" + $w.getSpi() + ", confidence=" + confidence + ", action=BUY");
 end
 
 

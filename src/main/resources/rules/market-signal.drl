@@ -7,9 +7,10 @@ import java.util.Map;
 import java.util.HashMap;
 import org.futures.model.PartialSignal;
 import org.futures.model.MarketSignal;
+import org.futures.model.ProfileWeights;
 import org.futures.model.Hypothesis;
 
-rule "ADD CONFIDENCES"
+rule "calculate confidence"
 agenda-group "conclusions"
 when
     $signals : List() from collect(Hypothesis())
@@ -35,11 +36,9 @@ then
                 hold+=h.getConfidence();
                 break;
         }
-        //boolean debug = debugLhsValue(h.getConfidence()); para debug, meter breakpoint na funcao debugLhsValue
         total+=h.getConfidence();
     }
 
-    // apply profile weights
         buy  = buy  * $wBuy;
         sell = sell * $wSell;
         hold = hold * $wHold;
@@ -51,7 +50,6 @@ then
     String finalDecision = "HOLD";
     double finalConf = 0.0;
 
-//1.1 serve como margem de 10%
     if (buy > sell * 1.1 && buy > hold) {
         finalDecision = "BUY";
         finalConf = buy / total;
@@ -65,12 +63,11 @@ then
     insert(new MarketSignal("ALL", finalDecision, finalConf, sell/total, buy/total, hold/total));
 
     System.out.println("─────────────────────────────────────────────");
-    System.out.println("📊 Aggregated MarketSignal (all signals combined)");
-    System.out.println("  🟢 BUY:  " + String.format("%.2f", buy));
-    System.out.println("  🔴 SELL: " + String.format("%.2f", sell));
-    System.out.println("  ⚪ HOLD: " + String.format("%.2f", hold));
-    System.out.println("📈 FINAL DECISION → " + finalDecision + " (confidence: "
-        + String.format("%.2f", finalConf) + ")");
+    System.out.println("Aggregated MarketSignal (all signals combined)");
+    System.out.println("    BUY:  " + String.format("%.2f", buy));
+    System.out.println("    SELL: " + String.format("%.2f", sell));
+    System.out.println("    HOLD: " + String.format("%.2f", hold));
+    System.out.println("Final decision → " + finalDecision + " (confidence: " + String.format("%.2f", finalConf) + ")");
     System.out.println("─────────────────────────────────────────────");
 end
 

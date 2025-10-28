@@ -37,11 +37,10 @@ public class FuturesService {
 
 
         LocalDate today = LocalDate.now();
-        int targetMonth = (today.getMonthValue() + investmentHorizon) % 12;
+        int targetMonth = ((today.getMonthValue() + investmentHorizon - 1) % 12) + 1;
 
         ksession.insert(new Commodity(commodityName, investmentHorizon, targetMonth));
         ksession.insert(new Investor(investorProfile));
-
 
         ksession.getAgenda().getAgendaGroup("commodity-rules").setFocus();
         ksession.fireAllRules();
@@ -75,13 +74,12 @@ public class FuturesService {
 
 
 
-        // ✅ Print no console antes de retornar
-        System.out.println("📊 --- Market Signals ---");
+        System.out.println("--- Market Signals ---");
         if (signals == null || signals.isEmpty()) {
-            System.out.println("⚠️ Nenhum sinal gerado pelo motor de regras.");
+            System.out.println("Nenhum sinal gerado pelo motor de regras.");
         } else {
             signals.forEach(signal ->
-                    System.out.printf("➡️ Sentiment: %s | Confidence: %.2f%n",
+                    System.out.printf("Sentiment: %s | Confidence: %.2f%n",
                             signal.getDecision(), signal.getConfidence())
             );
         }

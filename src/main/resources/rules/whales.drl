@@ -10,8 +10,7 @@ import java.util.HashMap
 import java.util.Map;
 
 
-// 🔴 Whale accumulation → bullish
-rule "Bullish - Whale accumulation detected"
+rule "Whale accumulation detected"
 when
     $commodity :Commodity()
     $v : Volume(month==$commodity.getMonth(),commodity==$commodity.getName())
@@ -22,15 +21,14 @@ then
     factors.put("buyVolume7d", $v.getBuyVolume7d());
     factors.put("openInterest", $v.getOpenInterest());
     factors.put("tradeSize", $v.getTradeSize());
-    factors.put("commodity", $commodity.getName());
+    factors.put("month", $v.getMonth());
 
 
-    insert(new Hypothesis($v.getCommodity(),"Whale accumulation", factors, 0.9, "BUY"));
-    System.out.println("🐋 Whale accumulation → bullish (period=" + $v.getMonth() +", OIΔ=" + $v.getOpenInterest() + "%, avgTrade=" + $v.getTradeSize() + ")");
+    insert(new Hypothesis($v.getCommodity(),"Whale accumulation", factors, 0.88, "BUY"));
+    System.out.println("Whale accumulation - commodity=" + $v.getCommodity() + ", month=" + $v.getMonth() + ", buyVolume=" + $v.getBuyVolume() + ", buyVolume7d=" + $v.getBuyVolume7d() + ", openInterest=" + $v.getOpenInterest() + ", tradeSize=" + $v.getTradeSize() + ", confidence=0.9"+ ", action=BUY");
 end
 
-// 🔴 Whale distribution → bearish
-rule "Bearish - Whale distribution detected"
+rule "Whale distribution detected"
 when
     $commodity :Commodity()
     $v : Volume(month==$commodity.getMonth(),commodity==$commodity.getName())
@@ -41,15 +39,14 @@ then
     factors.put("buyVolume7d", $v.getBuyVolume7d());
     factors.put("openInterest", $v.getOpenInterest());
     factors.put("tradeSize", $v.getTradeSize());
-    factors.put("commodity", $commodity.getName());
+    factors.put("month", $v.getMonth());
 
 
-    insert(new Hypothesis($v.getCommodity(),"Whale distribution", factors, 0.9, "SELL"));
-    System.out.println("🐋 Whale distribution → bearish (period=" + $v.getMonth() +", OIΔ=" + $v.getOpenInterest() + "%, avgTrade=" + $v.getTradeSize() + ")");
+    insert(new Hypothesis($v.getCommodity(),"Whale distribution", factors, 0.88, "SELL"));
+    System.out.println("Whale distribution - commodity=" + $v.getCommodity() + ", month=" + $v.getMonth() + ", buyVolume=" + $v.getBuyVolume() + ", buyVolume7d=" + $v.getBuyVolume7d() + ", openInterest=" + $v.getOpenInterest() + ", tradeSize=" + $v.getTradeSize() + ", confidence=0.9"+ ", action=SELL");
 end
 
-// ⚪ Neutral / no clear whale signal
-rule "Neutral - Normal volume and OI"
+rule "Normal market volume"
 when
     $commodity :Commodity()
     $v : Volume(month==$commodity.getMonth(),commodity==$commodity.getName())
@@ -60,10 +57,10 @@ then
     factors.put("buyVolume7d", $v.getBuyVolume7d());
     factors.put("openInterest", $v.getOpenInterest());
     factors.put("tradeSize", $v.getTradeSize());
-    factors.put("commodity", $commodity.getName());
+    factors.put("month", $v.getMonth());
 
 
-    insert(new Hypothesis($v.getCommodity(),"Normal volume", factors, 0.5, "HOLD"));
-    System.out.println("⚪ No whale anomaly detected → neutral (period=" + $v.getMonth() + ")");
+    insert(new Hypothesis($v.getCommodity(),"Normal market volume", factors, 0.5, "HOLD"));
+    System.out.println("Normal volume - commodity=" + $v.getCommodity() + ", month=" + $v.getMonth() + ", buyVolume=" + $v.getBuyVolume() + ", buyVolume7d=" + $v.getBuyVolume7d() + ", openInterest=" + $v.getOpenInterest() + ", tradeSize=" + $v.getTradeSize() + ", confidence=0.5"+ ", action=HOLD");
 end
 

@@ -74,10 +74,10 @@ public class BacktestingService {
             this.backtestResults.put(month, result);
 
             // Optional: console summary
-            System.out.printf("📅 Month %d — %d signals | %d hypotheses%n",
+            System.out.printf("Month %d — %d signals | %d hypotheses%n",
                     month, signals.size(), hypotheses.size());
             signals.forEach(s ->
-                    System.out.printf("➡️  %s (%.2f)%n",  s.getDecision(), s.getConfidence())
+                    System.out.printf("%s (%.2f)%n",  s.getDecision(), s.getConfidence())
             );
 
             // Dispose the session before next loop
@@ -93,9 +93,9 @@ public class BacktestingService {
     public void printSummary(String commodityName, String investorProfile) {
         Map<Integer, EvaluationResult> results = runBacktest(commodityName, investorProfile);
 
-        System.out.println("\n===== 🧠 Backtest Summary =====");
+        System.out.println("\n===== Backtest Summary =====");
         results.forEach((month, eval) -> {
-            System.out.printf("📆 M%02d → ", month);
+            System.out.printf(" M%02d → ", month);
             eval.getSignals().forEach(sig ->
                     System.out.printf("%s(%.2f) ", sig.getDecision(), sig.getConfidence())
             );

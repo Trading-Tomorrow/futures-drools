@@ -5,12 +5,18 @@ public class MarketPerception {
     private String source;
     private String perception;
     private double intensity;
+    private String description;
+    private int month;
+    private String country;
 
-    public MarketPerception(String commodity, String source, String perception, double intensity) {
+    public MarketPerception(String commodity, String source, String perception, double intensity, String description, int month,String country) {
         this.commodity = commodity;
         this.source = source;
         this.perception = perception;
         this.intensity = intensity;
+        this.description = description;
+        this.month = month;
+        this.country = country;
     }
 
     public String getCommodity() {
@@ -27,6 +33,18 @@ public class MarketPerception {
 
     public String getSource() {
         return source;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public String getCountry() {
+        return country;
     }
 
     @Override

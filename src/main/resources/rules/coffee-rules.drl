@@ -3,19 +3,26 @@ package rules
 dialect "java"
 
 import org.futures.model.Commodity;
+import org.futures.model.AvailableRegion;
 
-rule "Coffee Arabica alert"
+rule "Coffee Arabica"
     agenda-group "commodity-rules"
 when
     $c : Commodity(name=="Arabica")
 then
-    System.out.println("☕ Arabica detected — watch futures closely!");
+    insert(new AvailableRegion("Brasil","Minas Gerais"));
+    insert(new AvailableRegion("Brasil","São Paulo"));
+    insert(new AvailableRegion("Brasil","Bahia"));
+    insert(new AvailableRegion("Colombia","Andina Cafeeira"));
+    System.out.println("Arabica detected");
 end
 
-rule "Coffee Robusta alert"
+rule "Coffee Robusta"
     agenda-group "commodity-rules"
 when
     $c : Commodity(name=="Robusta")
 then
-    System.out.println("☕ Robusta detected — watch futures closely!");
+    insert(new AvailableRegion("Brasil","Espirito Santo"));
+    insert(new AvailableRegion("Vietnam","Central Highlands"));
+    System.out.println("Robusta detected");
 end
