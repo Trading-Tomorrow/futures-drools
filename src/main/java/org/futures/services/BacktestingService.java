@@ -69,11 +69,10 @@ public class BacktestingService {
                     .map(o -> (Hypothesis) o)
                     .collect(Collectors.toList());
 
-            // Store monthly result
+
             EvaluationResult result = new EvaluationResult(commodityName, investorProfile, signals, hypotheses);
             this.backtestResults.put(month, result);
 
-            // Optional: console summary
             System.out.printf("Month %d — %d signals | %d hypotheses%n",
                     month, signals.size(), hypotheses.size());
             signals.forEach(s ->
