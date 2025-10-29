@@ -44,39 +44,34 @@ public class SimilarityService {
         return results;
     }
 
-    /**
-     * Calculates similarity between two sets of MarketSignals using
-     * decision equality and confidence closeness.
-     */
     private double calculateSignalSimilarity(EvaluationResult a, EvaluationResult b) {
         List<MarketSignal> sigA = a.getSignals();
         List<MarketSignal> sigB = b.getSignals();
 
         if (sigA.isEmpty() || sigB.isEmpty()) return 0.0;
 
+        // Assume corresponding signals refer to same month / same index meaning
+        int size = Math.min(sigA.size(), sigB.size());
+        double totalScore = 0.0;
 
-        Map<String, Double> mapA = sigA.stream()
-                .collect(Collectors.toMap(MarketSignal::getDecision, MarketSignal::getConfidence, (x, y) -> (x + y) / 2));
+        for (int i = 0; i < size; i++) {
+            MarketSignal sA = sigA.get(i);
+            MarketSignal sB = sigB.get(i);
 
-        Map<String, Double> mapB = sigB.stream()
-                .collect(Collectors.toMap(MarketSignal::getDecision, MarketSignal::getConfidence, (x, y) -> (x + y) / 2));
+            if (sA.getDecision().equalsIgnoreCase(sB.getDecision())) {
+                // decisions match → evaluate confidence closeness
+                double diff = Math.abs(sA.getConfidence() - sB.getConfidence());
+                double score = 1.0 - diff; // closer confidence = higher score
+                if (score < 0) score = 0;  // safety clamp
+                totalScore += score;
 
-        Set<String> allDecisions = new HashSet<>();
-        allDecisions.addAll(mapA.keySet());
-        allDecisions.addAll(mapB.keySet());
-
-        double totalSim = 0.0;
-        for (String decision : allDecisions) {
-            double confA = mapA.getOrDefault(decision, 0.0);
-            double confB = mapB.getOrDefault(decision, 0.0);
-
-
-            double score = 1 - Math.abs(confA - confB);
-            if (score < 0) score = 0;
-            totalSim += score;
+            } else {
+                // decisions differ → this signal contributes 0 similarity
+                totalScore += 0;
+            }
         }
 
-        return totalSim / allDecisions.size();
+        return totalScore / size; // normalize to 0–1 similarity
     }
 
     /**
