@@ -5,25 +5,29 @@ dialect "java"
 import org.futures.model.ExchangeRate;
 import org.futures.model.PartialSignal;
 import org.futures.model.Hypothesis;
-import org.futures.model.Commodity
-import java.util.Map
+import org.futures.model.Commodity;
+import java.util.Map;
 import java.util.HashMap;
 
-// 💵 Bearish when local currency weakens
 rule "Local currency depreciation - Brasil"
 when
     $commodity :Commodity(name in ("Arabica","Robusta"))
     $er : ExchangeRate(country=="Brasil",month==$commodity.getMonth())
     eval($er.getVariation()>=1.5)
 then
+    double confidence=0.0;
+    switch ($commodity.getName()) {
+        case "Arabica": confidence=0.91; break;
+        case "Robusta": confidence=0.83; break;
+    }
 
     Map<String, Object> factors = new HashMap<>();
     factors.put("exchangeRateVariation", $er.getVariation());
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Fall of the local currency compared to the dollar",factors,0.8,"SELL"));
-    System.out.println("💱 FX → BRL weakening detected → bearish for coffee prices ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Fall of the local currency compared to the dollar",factors,confidence,"SELL"));
+    System.out.println("Local currency depreciation - country=" + $er.getCountry() +", month=" + $commodity.getMonth() +", exchangeRateVariation=" + $er.getVariation() +", action=SELL");
 end
 
 rule "Local currency depreciation - Colombia"
@@ -38,8 +42,8 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Fall of the local currency compared to the dollar",factors,0.5,"SELL"));
-    System.out.println("💱 FX → COP weakening detected → bearish for coffee prices ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Fall of the local currency compared to the dollar",factors,0.7,"SELL"));
+    System.out.println("Local currency depreciation - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=SELL");
 end
 
 rule "Local currency depreciation - Vietnam"
@@ -54,25 +58,28 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Fall of the local currency compared to the dollar",factors,0.5,"SELL"));
-    System.out.println("💱 FX → VND weakening detected → bearish for coffee prices ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Fall of the local currency compared to the dollar",factors,0.8,"SELL"));
+    System.out.println("Local currency depreciation - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=SELL");
 end
 
-// 📈 Bullish when local currency strengthens
 rule "Local currency strengthening - Brasil"
 when
     $commodity :Commodity(name in ("Arabica","Robusta"))
     $er : ExchangeRate(country=="Brasil",month==$commodity.getMonth())
     eval($er.getVariation()<=-1.5)
 then
-
+    double confidence=0.0;
+    switch ($commodity.getName()) {
+        case "Arabica": confidence=0.91; break;
+        case "Robusta": confidence=0.83; break;
+    }
     Map<String, Object> factors = new HashMap<>();
     factors.put("exchangeRateVariation", $er.getVariation());
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Rise of the local currency compared to the dollar",factors,0.8,"BUY"));
-    System.out.println("💱 FX → BRL strengthening detected → Bullish for coffee prices ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Rise of the local currency compared to the dollar",factors,confidence,"BUY"));
+    System.out.println("Local currency strengthening - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=BUY");
 end
 
 rule "Local currency strengthening - Colombia"
@@ -87,8 +94,8 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Rise of the local currency compared to the dollar",factors,0.5,"BUY"));
-    System.out.println("💱 FX → COP strengthening detected → Bullish for coffee prices ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Rise of the local currency compared to the dollar",factors,0.7,"BUY"));
+    System.out.println("Local currency strengthening - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=BUY");
 end
 
 rule "Local currency strengthening - Vietnam"
@@ -103,11 +110,10 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Rise of the local currency compared to the dollar",factors,0.5,"BUY"));
-    System.out.println("💱 FX → VND strengthening detected → Bullish for coffee prices ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Rise of the local currency compared to the dollar",factors,0.8,"BUY"));
+    System.out.println("Local currency strengthening - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=BUY");
 end
 
-// ⚠️
 rule "Local currency stabilization - Brasil"
 when
     $commodity :Commodity(name in ("Arabica","Robusta"))
@@ -120,8 +126,8 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Stabilization of the local currency compared to the dollar",factors,0.5,"HOLD"));
-    System.out.println("💱 FX → BRL stabilization detected → ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Stabilization of the local currency compared to the dollar",factors,0.4,"HOLD"));
+    System.out.println("Local currency stabilization - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=HOLD");
 end
 
 rule "Local currency stabilization - Colombia"
@@ -136,8 +142,8 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Stabilization of the local currency compared to the dollar",factors,0.3,"HOLD"));
-    System.out.println("💱 FX → COP stabilization detected → ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Stabilization of the local currency compared to the dollar",factors,0.4,"HOLD"));
+    System.out.println("Local currency stabilization - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=HOLD");
 end
 
 
@@ -153,7 +159,7 @@ then
     factors.put("month", $commodity.getMonth());
     factors.put("country", $er.getCountry());
 
-    insert(new Hypothesis($commodity.getName(),"Stabilization of the local currency compared to the dollar",factors,0.3,"HOLD"));
-    System.out.println("💱 FX → VND stabilization detected → ("+ $er.getVariation() + "%)");
+    insert(new Hypothesis($commodity.getName(),"Stabilization of the local currency compared to the dollar",factors,0.4,"HOLD"));
+    System.out.println("Local currency stabilization - country=" + $er.getCountry() + ", month=" + $commodity.getMonth() + ", exchangeRateVariation=" + $er.getVariation() + ", action=HOLD");
 end
 

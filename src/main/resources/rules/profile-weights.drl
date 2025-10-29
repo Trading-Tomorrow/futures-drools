@@ -4,16 +4,6 @@ dialect "java"
 import org.futures.model.Investor;
 import org.futures.model.ProfileWeights;
 
-// -------------------------------
-//  Profile → Weights BUY/SELL/HOLD
-// -------------------------------
-declare ProfileWeights
-  buyW  : double
-  sellW : double
-  holdW : double
-end
-
-// Conservative profile
 rule "PROFILE WEIGHTS - Conservative"
 agenda-group "profile-weights"
 when
@@ -21,13 +11,12 @@ when
 then
   insertLogical(new ProfileWeights(0.9, 1.1, 1.0));
   System.out.println("─────────────────────────────────────────────");
-  System.out.println("👤 Profile detected: CONSERVATIVE");
-  System.out.println("⚖️  Applied weights → BUY: 0.9 | SELL: 1.1 | HOLD: 1.0");
-  System.out.println("📉 More cautious approach: favors SELL signals slightly.");
+  System.out.println("Profile detected: Conservative");
+  System.out.println("Applied weights → BUY: 0.9 | SELL: 1.1 | HOLD: 1.0");
+  System.out.println("More cautious approach: favors SELL signals slightly.");
   System.out.println("─────────────────────────────────────────────");
 end
 
-// Balanced profile
 rule "PROFILE WEIGHTS - Balanced"
 agenda-group "profile-weights"
 when
@@ -35,13 +24,12 @@ when
 then
   insertLogical(new ProfileWeights(1.0, 1.0, 1.0));
   System.out.println("─────────────────────────────────────────────");
-  System.out.println("👤 Profile detected: BALANCED");
-  System.out.println("⚖️  Applied weights → BUY: 1.0 | SELL: 1.0 | HOLD: 1.0");
-  System.out.println("📊 Neutral approach: equal weight to all decisions.");
+  System.out.println("Profile detected: Balanced");
+  System.out.println("Applied weights → BUY: 1.0 | SELL: 1.0 | HOLD: 1.0");
+  System.out.println("Neutral approach: equal weight to all decisions.");
   System.out.println("─────────────────────────────────────────────");
 end
 
-// Aggressive profile
 rule "PROFILE WEIGHTS - Aggressive"
 agenda-group "profile-weights"
 when
@@ -49,13 +37,12 @@ when
 then
   insertLogical(new ProfileWeights(1.1, 0.9, 1.0));
   System.out.println("─────────────────────────────────────────────");
-  System.out.println("👤 Profile detected: AGGRESSIVE");
-  System.out.println("⚖️  Applied weights → BUY: 1.1 | SELL: 0.9 | HOLD: 1.0");
-  System.out.println("📈 Risk-taking approach: gives more influence to BUY signals.");
+  System.out.println("Profile detected: Aggressive");
+  System.out.println("Applied weights → BUY: 1.1 | SELL: 0.9 | HOLD: 1.0");
+  System.out.println("Risk-taking approach: gives more influence to BUY signals.");
   System.out.println("─────────────────────────────────────────────");
 end
 
-// Default (no profile matched)
 rule "PROFILE WEIGHTS - Default"
 agenda-group "profile-weights"
 when
@@ -63,7 +50,7 @@ when
 then
   insertLogical(new ProfileWeights(1.0, 1.0, 1.0));
   System.out.println("─────────────────────────────────────────────");
-  System.out.println("👤 Profile not recognized → DEFAULT weights applied");
-  System.out.println("⚖️  BUY: 1.0 | SELL: 1.0 | HOLD: 1.0");
+  System.out.println("Profile not recognized → default weights applied");
+  System.out.println("BUY: 1.0 | SELL: 1.0 | HOLD: 1.0");
   System.out.println("─────────────────────────────────────────────");
 end
