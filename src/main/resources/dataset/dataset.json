@@ -206,6 +206,8 @@
         {"commodity":"Robusta","source":"X","perception":"Positive","intensity":0.9,"description":"New export contracts signed","month":1,"country":"Vietnam"},
         {"commodity":"Arabica","source":"Reuters","perception":"Negative","intensity":0.5,"description":"Pests affected some plantations","month":2,"country":"Brasil"},
         {"commodity":"Robusta","source":"X","perception":"Positive","intensity":0.8,"description":"Stock levels stabilized prices","month":2,"country":"Brasil"},
+        {"commodity":"Arabica","source":"X","perception":"Positive","intensity":0.85,"description":"Exports to Asia increased","month":1,"country":"Brasil"},
+        {"commodity":"Arabica","source":"X","perception":"Positive","intensity":0.65,"description":"Exports to Africa increased","month":1,"country":"Brasil"},
         {"commodity":"Arabica","source":"Bloomberg","perception":"Positive","intensity":0.65,"description":"Government subsidies increased yield","month":2,"country":"Colombia"},
         {"commodity":"Robusta","source":"Reuters","perception":"Negative","intensity":0.45,"description":"Transport bottlenecks affected exports","month":2,"country":"Vietnam"},
         {"commodity":"Arabica","source":"X","perception":"Positive","intensity":0.8,"description":"Harvest exceeded expectations","month":3,"country":"Brasil"},
