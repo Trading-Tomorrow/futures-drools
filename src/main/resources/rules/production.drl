@@ -191,7 +191,7 @@ when
 then
     double confidence=0.0;
     switch ($p.getRegion()){
-        case "Espirito Santo": confidence=0.95;break;
+        case "Central Highlands": confidence=0.95;break;
     }
 
     Map<String,Object> factors = new HashMap<>();
