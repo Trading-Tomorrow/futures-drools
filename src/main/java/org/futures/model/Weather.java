@@ -3,9 +3,9 @@ package org.futures.model;
 public class Weather {
     private String country;
     private String region;
-    private int month; // e.g., "drought", "rain", "frost", "ideal"
-    private double temperature; // from normal, in °C
-    private double spi; // percentage from normal
+    private int month; 
+    private double temperature; 
+    private double spi; 
 
     public Weather(String country, String region, int month, double temperature, double spi) {
         this.country = country;

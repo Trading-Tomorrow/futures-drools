@@ -1,10 +1,10 @@
 package org.futures.model;
 
 public class PartialSignal {
-    private String category;   // "weather", "sentiment", "whale", "exchange", "stock"
-    private String decision;   // "BUY", "SELL", "HOLD"
-    private double confidence; // weight
-    private String month;      // link to time
+    private String category;   
+    private String decision;   
+    private double confidence; 
+    private String month;      
 
     public PartialSignal(String category, String decision, double confidence, String month) {
         this.category = category;

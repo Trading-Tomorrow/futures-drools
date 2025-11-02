@@ -3,10 +3,10 @@ package org.futures.model;
 import java.util.Map;
 
 public class MarketSignal {
-    private String month;       // e.g., "2025-07"
-    private String decision;    // "BUY", "HOLD", "SELL"
-    private double confidence;  // 0.0–1.0 weight of signal
-    private Map<String, Double> whyWeights; //sell, buy, hold
+    private String month;      
+    private String decision;   
+    private double confidence;  
+    private Map<String, Double> whyWeights;
 
     public MarketSignal(String month, String decision, double confidence, double sell, double buy, double hold) {
         this.month = month;

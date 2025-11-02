@@ -10,7 +10,6 @@ public class FinalResponse {
     private final Map<Integer, EvaluationResult> backtesting;
     private final List<SimilarityService.SimilarityMatch> similarityMatches;
 
-    // ✅ Full constructor (evaluation + backtesting + similarity)
     public FinalResponse(EvaluationResult evaluationResult,
                          Map<Integer, EvaluationResult> backtesting,
                          List<SimilarityService.SimilarityMatch> similarityMatches) {
@@ -19,13 +18,11 @@ public class FinalResponse {
         this.similarityMatches = similarityMatches;
     }
 
-    // ✅ Overloaded: evaluation + backtesting only
     public FinalResponse(EvaluationResult evaluationResult,
                          Map<Integer, EvaluationResult> backtesting) {
         this(evaluationResult, backtesting, null);
     }
 
-    // ✅ Overloaded: evaluation only
     public FinalResponse(EvaluationResult evaluationResult) {
         this(evaluationResult, null, null);
     }

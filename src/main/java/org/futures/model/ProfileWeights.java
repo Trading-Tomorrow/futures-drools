@@ -1,9 +1,5 @@
 package org.futures.model;
 
-/**
- * Facto simples que contém os pesos aplicáveis às decisões
- * de BUY, SELL e HOLD, de acordo com o perfil do investidor.
- */
 public class ProfileWeights {
 
     private double buyW;

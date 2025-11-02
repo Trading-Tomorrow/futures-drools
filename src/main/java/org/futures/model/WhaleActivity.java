@@ -1,12 +1,12 @@
 package org.futures.model;
 
 public class WhaleActivity {
-    private String period;           // e.g., "2025-07"
-    private double volume;           // total contracts traded
-    private double avgTradeSize;     // average size per trade
-    private double openInterestChange; // % change vs previous day/week
-    private double volume7dAvg;      // 7-day moving average
-    private double openInterest7dAvg; // 7-day OI avg for context
+    private String period;           
+    private double volume;           
+    private double avgTradeSize;     
+    private double openInterestChange;
+    private double volume7dAvg;      
+    private double openInterest7dAvg;
 
     public WhaleActivity(String period, double volume, double avgTradeSize, double openInterestChange, double volume7dAvg, double openInterest7dAvg) {
         this.period = period;

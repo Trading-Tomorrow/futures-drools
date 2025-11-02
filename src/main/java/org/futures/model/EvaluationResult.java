@@ -10,7 +10,6 @@ public class EvaluationResult {
     private final List<MarketSignal> signals;
     private final List<Hypothesis> hypotheses;
 
-    // ✅ Constructor for main results (with backtesting)
     public EvaluationResult(String commodity, String investor,
                             List<MarketSignal> signals,
                             List<Hypothesis> hypotheses,
@@ -21,7 +20,6 @@ public class EvaluationResult {
         this.hypotheses = hypotheses;
     }
 
-    // ✅ Overloaded constructor for cases without backtesting
     public EvaluationResult(String commodity, String investor,
                             List<MarketSignal> signals,
                             List<Hypothesis> hypotheses) {

@@ -1,9 +1,9 @@
 package org.futures.model;
 
 public class ExchangeRate {
-    private String country; // e.g., "USDBRL"
-    private int month; // current exchange rate
-    private double variation; // change compared to last week/day (%)
+    private String country; 
+    private int month;
+    private double variation;
 
     public ExchangeRate(String country,  int month, double variation) {
         this.country = country;
